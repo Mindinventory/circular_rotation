@@ -75,19 +75,19 @@ This package supports drag & drop widgets inside the GridView.builder for multip
 - It contains the **List of Widgets**.
 
 ##### visibleFirstCircle:
-Visibility of first circle. It contains bool value.
-`true` = visible,
-`false` = invisible.
+- Visibility of first circle. It contains bool value.
+- `true` = visible,
+- `false` = invisible.
 
 ##### visibleSecondCircle:
-Visibility of second circle. It contains bool value.
-`true` = visible,
-`false` = invisible.
+- Visibility of second circle. It contains bool value.
+- `true` = visible,
+- `false` = invisible.
 
 ##### visibleThirdCircle:
-Visibility of third circle. It contains bool value.
-`true` = visible,
-`false` = invisible.
+- Visibility of third circle. It contains bool value.
+- `true` = visible,
+- `false` = invisible.
 
 ##### firstCircleRadius:
 - Displays the first circle based on radius.
@@ -193,6 +193,8 @@ Visibility of third circle. It contains bool value.
 - **[Curves],** a collection of common animation easing curves.
 - **[CurveTween]**, which can be used to apply a [Curve] to an** [Animation]**.
 - Default value is `Curves.linear`
+
+
 
 
 ## Guideline for contributors
