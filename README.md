@@ -170,22 +170,22 @@ This package supports drag & drop widgets inside the GridView.builder for multip
 - `false` = show animation only for one time.
 
 ##### allCircleAnimationDuration:
-- Set the animation duration in seconds for all circles.
+- Set the animation duration in milliseconds for all circles.
 - This parameter affects when **[startAnimation]** is true.
 - It contains **int** value.
 
 ##### firstCircleAnimationDuration:
-- Set the animation duration in seconds for the first circle.
+- Set the animation duration in milliseconds for the first circle.
 - This parameter affects when **[startAnimation]** is true.
 - It contains **int** value.
 
 ##### secondCircleAnimationDuration:
-- Set the animation duration in seconds for the second circle.
+- Set the animation duration in milliseconds for the second circle.
 - This parameter affects when **[startAnimation]** is true.
 - It contains **int** value.
 
 ##### thirdCircleAnimationDuration:
-- Set the animation duration in seconds for the third circle.
+- Set the animation duration in milliseconds for the third circle.
 - This parameter affects when **[startAnimation]** is true.
 - It contains **int** value.
 
@@ -193,7 +193,6 @@ This package supports drag & drop widgets inside the GridView.builder for multip
 - **[Curves],** a collection of common animation easing curves.
 - **[CurveTween]**, which can be used to apply a [Curve] to an** [Animation]**.
 - Default value is `Curves.linear`
-
 
 
 

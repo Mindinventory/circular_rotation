@@ -1,8 +1,8 @@
 part of planet_widget;
 
 enum CircleAnimationStatus {
-  IDLE,
-  START,
-  PAUSE,
-  STOP,
+  idle,
+  start,
+  pause,
+  stop,
 }

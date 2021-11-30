@@ -1,27 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:example/astro.dart';
 import 'package:example/constants/image_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:planet_widget/widgets/planet_widget.dart';
 
-void main() {
-  runApp(
-    MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const MyApp(),
-    ),
-  );
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Astro extends StatefulWidget {
+  const Astro({Key? key}) : super(key: key);
 
   @override
-  _MyAppState createState() => _MyAppState();
+  _AstroState createState() => _AstroState();
 }
 
-class _MyAppState extends State<MyApp> {
-  var firstCircleImagesUrl = [
+class _AstroState extends State<Astro> {
+  var secondCircleImagesUrl = [
     'http://clipart-library.com/images_k/transparent-globe/transparent-globe-6.png',
     'https://assets.stickpng.com/images/580b585b2edbce24c47b2712.png',
     'https://assets.stickpng.com/images/580b585b2edbce24c47b2707.png',
@@ -29,7 +19,7 @@ class _MyAppState extends State<MyApp> {
     'https://assets.stickpng.com/images/580b585b2edbce24c47b2709.png',
   ];
 
-  var secondCircleImagesUrl = [
+  var thirdCircleImagesUrl = [
     'https://assets.stickpng.com/images/580b585b2edbce24c47b2703.png',
     'http://assets.stickpng.com/images/5a00de3d0e8525eec2752ffe.png',
     'https://assets.stickpng.com/images/580b585b2edbce24c47b270a.png',
@@ -37,7 +27,7 @@ class _MyAppState extends State<MyApp> {
     'http://assets.stickpng.com/thumbs/5a00de530e8525eec2752fff.png',
   ];
 
-  var thirdCircleImagesUrl = [
+  var firstCircleImagesUrl = [
     'http://clipart-library.com/images_k/sun-transparent-background/sun-transparent-background-15.png',
     'http://clipart-library.com/newhp/Uranus_PNG_Clip_Art-3007.png',
     'http://assets.stickpng.com/thumbs/5f4e7876481e190004044f88.png',
@@ -55,7 +45,9 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
         body: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -74,42 +66,15 @@ class _MyAppState extends State<MyApp> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   InkWell(
-                    child: const Text(
-                      'Start',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
+                    child: const Text('Start', style: TextStyle(color: Colors.white, fontSize: 24,),),
                     onTap: () {
                       _planetWidget.startCircleAnimation();
                     },
                   ),
                   InkWell(
-                    child: const Text(
-                      'Stop',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
+                    child: Text('Stop', style: TextStyle(color: Colors.white, fontSize: 24,),),
                     onTap: () {
                       _planetWidget.stopCircleAnimation();
-                    },
-                  ),
-                  ElevatedButton(
-                    child: const Text(
-                      'Astro',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Astro()));
                     },
                   ),
                 ],
@@ -117,6 +82,7 @@ class _MyAppState extends State<MyApp> {
             ],
           ),
         ),
+      ),
     );
   }
 
@@ -186,7 +152,6 @@ class _MyAppState extends State<MyApp> {
           ],
         ),
       ),
-      curve: Curves.ease,
     );
   }
 

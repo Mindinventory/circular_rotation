@@ -52,25 +52,25 @@ class DrawCircleWidgets extends StatefulWidget {
   /// false = show animation only for one time.
   final bool repeatAnimation;
 
-  /// Set the animation duration in seconds for all circles.
+  /// Set the animation duration in milliseconds for all circles.
   /// This parameter affects when [startAnimation] is true.
   ///
   /// it contains [int] value.
   final int allCircleAnimationDuration;
 
-  /// Set the animation duration in seconds for the first circle.
+  /// Set the animation duration in milliseconds for the first circle.
   /// This parameter affects when [startAnimation] is true.
   ///
   /// it contains [int] value.
   final int firstCircleAnimationDuration;
 
-  /// Set the animation duration in seconds for the second circle.
+  /// Set the animation duration in milliseconds for the second circle.
   /// This parameter affects when [startAnimation] is true.
   ///
   /// it contains [int] value.
   final int secondCircleAnimationDuration;
 
-  /// Set the animation duration in seconds for the third circle.
+  /// Set the animation duration in milliseconds for the third circle.
   /// This parameter affects when [startAnimation] is true.
   ///
   /// it contains [int] value.
@@ -81,10 +81,6 @@ class DrawCircleWidgets extends StatefulWidget {
   ///
   /// Default value is Curves.linear
   final Curve curve;
-
-  AnimationController? firstCircleController;
-  AnimationController? secondCircleController;
-  AnimationController? thirdCircleController;
 
   DrawCircleWidgets({
     Key? key,
@@ -131,17 +127,18 @@ class _DrawCircleWidgetsState extends State<DrawCircleWidgets>
   bool isSecondCircleRepeat = true;
   bool isThirdCircleRepeat = true;
 
-  HashMap<int, Widget> widgetMap = HashMap();
+  HashMap<int, Widget> widgetsMap = HashMap();
 
   late CircleAnimationStatus circleAnimationStatus;
+  AnimationController? firstCircleController;
 
   @override
   void initState() {
     super.initState();
     setSchedulerForWidgetSize();
     circleAnimationStatus = (widget.startAnimation)
-        ? CircleAnimationStatus.START
-        : CircleAnimationStatus.IDLE;
+        ? CircleAnimationStatus.start
+        : CircleAnimationStatus.idle;
   }
 
   @override
@@ -149,39 +146,13 @@ class _DrawCircleWidgetsState extends State<DrawCircleWidgets>
     return Stack(
       children: [
         ...createFirstItems(),
-        /*...createSecondItems(),
-        ...createThirdItems(),*/
+        ...createSecondItems(),
+        ...createThirdItems(),
         ...createCenterItem(),
       ],
     );
   }
 
-  void setSchedulerForWidgetSize() {
-    SchedulerBinding.instance!.addPostFrameCallback((timeStamp) {
-      for (var element in firstCircleWidgets) {
-        firstCircleWidgetsSize.add(Size(
-            (element.key as GlobalKey).currentContext!.size!.width / 2,
-            (element.key as GlobalKey).currentContext!.size!.height / 2));
-      }
-      for (var element in secondCircleWidgets) {
-        secondCircleWidgetsSize.add(Size(
-            (element.key as GlobalKey).currentContext!.size!.width / 2,
-            (element.key as GlobalKey).currentContext!.size!.height / 2));
-      }
-      for (var element in thirdCircleWidgets) {
-        thirdCircleWidgetsSize.add(Size(
-            (element.key as GlobalKey).currentContext!.size!.width / 2,
-            (element.key as GlobalKey).currentContext!.size!.height / 2));
-      }
-      for (var element in centerCircleWidgets) {
-        centerCircleWidgetsSize.add(Size(
-            (element.key as GlobalKey).currentContext!.size!.width / 2,
-            (element.key as GlobalKey).currentContext!.size!.height / 2));
-      }
-
-      setState(() {});
-    });
-  }
 
   List<Widget> createFirstItems() {
     if (!isFirstCircleRepeat) {
@@ -193,19 +164,22 @@ class _DrawCircleWidgetsState extends State<DrawCircleWidgets>
     if (widget.firstCircleWidgets != null &&
         widget.firstCircleWidgets!.isNotEmpty) {
       widget.firstCircleWidgets!.asMap().forEach(
-        (index, element) {
+        (index, child) {
           firstCircleWidgets.add(
-            tweenBuilder(
-              child: element,
-              index: index,
-              length: widget.firstCircleWidgets!.length,
-              duration: widget.firstCircleAnimationDuration,
+            TweenBuilderWidget(
+              key: GlobalKey(),
+              child: child,
+              currentElementPosition: index,
+              totalElementsLength: widget.firstCircleWidgets?.length ?? 0,
+              defaultAnimationDuration: widget.allCircleAnimationDuration,
+              animationDuration: widget.firstCircleAnimationDuration,
               circleRadius: _firstRadius,
               circleRadians: widget.firstCircleRadians,
-              sizeList: firstCircleWidgetsSize,
+              circleWidgetsSize: firstCircleWidgetsSize,
               startAnimation: widget.startAnimation,
-              widgetMap: widgetMap,
-              onEnd: () {
+              curve: widget.curve,
+              mapWidgets: widgetsMap,
+              onEndCallback: () {
                 if (widget.repeatAnimation) {
                   isFirstCircleRepeat = true;
                   setState(() {});
@@ -221,7 +195,7 @@ class _DrawCircleWidgetsState extends State<DrawCircleWidgets>
     return [];
   }
 
-  /*List<Widget> createSecondItems() {
+  List<Widget> createSecondItems() {
     if (!isSecondCircleRepeat) {
       return secondCircleWidgets;
     }
@@ -231,21 +205,27 @@ class _DrawCircleWidgetsState extends State<DrawCircleWidgets>
     if (widget.secondCircleWidgets != null &&
         widget.secondCircleWidgets!.isNotEmpty) {
       widget.secondCircleWidgets!.asMap().forEach(
-        (index, element) {
+        (index, child) {
           secondCircleWidgets.add(
-            tweenBuilder(
-              child: element,
-              index: index,
-              length: widget.secondCircleWidgets!.length,
-              duration: widget.secondCircleAnimationDuration,
+            TweenBuilderWidget(
+              key: GlobalKey(),
+              child: child,
+              currentElementPosition: index,
+              totalElementsLength: widget.secondCircleWidgets?.length ?? 0,
+              defaultAnimationDuration: widget.allCircleAnimationDuration,
+              animationDuration: widget.secondCircleAnimationDuration,
               circleRadius: _secondRadius,
               circleRadians: widget.secondCircleRadians,
-              sizeList: secondCircleWidgetsSize,
+              circleWidgetsSize: secondCircleWidgetsSize,
               startAnimation: widget.startAnimation,
-              onEnd: () {
+              curve: widget.curve,
+              mapWidgets: widgetsMap,
+              onEndCallback: () {
                 if (widget.repeatAnimation) {
                   isSecondCircleRepeat = true;
                   setState(() {});
+                } else {
+                  circleAnimationStatus = CircleAnimationStatus.idle;
                 }
               },
             ),
@@ -268,21 +248,27 @@ class _DrawCircleWidgetsState extends State<DrawCircleWidgets>
     if (widget.thirdCircleWidgets != null &&
         widget.thirdCircleWidgets!.isNotEmpty) {
       widget.thirdCircleWidgets!.asMap().forEach(
-        (index, element) {
+        (index, child) {
           thirdCircleWidgets.add(
-            tweenBuilder(
-              child: element,
-              index: index,
-              length: widget.thirdCircleWidgets!.length,
-              duration: widget.thirdCircleAnimationDuration,
+            TweenBuilderWidget(
+              key: GlobalKey(),
+              child: child,
+              currentElementPosition: index,
+              totalElementsLength: widget.thirdCircleWidgets?.length ?? 0,
+              defaultAnimationDuration: widget.allCircleAnimationDuration,
+              animationDuration: widget.thirdCircleAnimationDuration,
               circleRadius: _thirdRadius,
               circleRadians: widget.thirdCircleRadians,
-              sizeList: thirdCircleWidgetsSize,
+              circleWidgetsSize: thirdCircleWidgetsSize,
               startAnimation: widget.startAnimation,
-              onEnd: () {
+              curve: widget.curve,
+              mapWidgets: widgetsMap,
+              onEndCallback: () {
                 if (widget.repeatAnimation) {
                   isThirdCircleRepeat = true;
                   setState(() {});
+                }else {
+                  circleAnimationStatus = CircleAnimationStatus.idle;
                 }
               },
             ),
@@ -293,7 +279,7 @@ class _DrawCircleWidgetsState extends State<DrawCircleWidgets>
       return thirdCircleWidgets;
     }
     return [];
-  }*/
+  }
 
   List<Widget> createCenterItem() {
     if (centerCircleWidgetsSize.isNotEmpty) {
@@ -317,108 +303,63 @@ class _DrawCircleWidgetsState extends State<DrawCircleWidgets>
     return centerCircleWidgets;
   }
 
-  Widget tweenBuilder({
-    required Widget child,
-    required int index,
-    required int length,
-    required int duration,
-    required double circleRadius,
-    required double circleRadians,
-    required List<Size> sizeList,
-    required bool startAnimation,
-    required Map widgetMap,
-    required VoidCallback onEnd,
-  }) {
-    return TweenAnimationBuilder<double>(
-      curve: widget.curve,
-      child: child,
-      key: GlobalKey(),
-      tween: Tween(
-        begin: index.toDouble(),
-        end: (startAnimation) ? (index + length).toDouble() : index.toDouble(),
-      ),
-      duration: Duration(
-        seconds:
-            (duration != -1) ? duration : widget.allCircleAnimationDuration,
-      ),
-      onEnd: onEnd,
-      builder: (BuildContext context, double size, Widget? child) {
-        var elementPosition = size + circleRadians;
-        var radians = ((elementPosition) * 2 * math.pi) / length;
-        Offset pointOnCircle = Offset(
-          circleRadius * math.cos(radians) +
-              _circleCenter.dx -
-              ((sizeList.length > index) ? sizeList[index].width : 0),
-          circleRadius * math.sin(radians) +
-              _circleCenter.dy -
-              ((sizeList.length > index) ? sizeList[index].height : 0),
-        );
-        var positionedWidget = Positioned(
-          left: pointOnCircle.dx,
-          top: pointOnCircle.dy,
-          child: child!,
-        );
-        if (widgetMap.containsKey(index)) {
-          widgetMap.update(
-            index,
-            (value) => positionedWidget,
-          );
-        } else {
-          widgetMap.putIfAbsent(
-            index,
-            () => positionedWidget,
-          );
-        }
-        return widgetMap[index]!;
-      },
-    );
-  }
-
   void resetCircleAnimation() {
-    if (circleAnimationStatus != CircleAnimationStatus.STOP) {
+    if (circleAnimationStatus != CircleAnimationStatus.stop) {
       setState(() {
         isFirstCircleRepeat = true;
         isSecondCircleRepeat = true;
         isThirdCircleRepeat = true;
         widget.startAnimation = false;
       });
-      circleAnimationStatus = CircleAnimationStatus.STOP;
+      circleAnimationStatus = CircleAnimationStatus.stop;
     }
   }
 
   void startCircleAnimation() {
-    if (circleAnimationStatus != CircleAnimationStatus.START) {
+    if (circleAnimationStatus != CircleAnimationStatus.start) {
       setState(() {
-        if (circleAnimationStatus == CircleAnimationStatus.PAUSE) {
+        if (circleAnimationStatus == CircleAnimationStatus.pause) {
           firstCircleWidgets.clear();
           firstCircleWidgets = pausedFirstCircleWidgets;
         }
         isFirstCircleRepeat =
-            circleAnimationStatus != CircleAnimationStatus.PAUSE;
+            circleAnimationStatus != CircleAnimationStatus.pause;
         isSecondCircleRepeat =
-            circleAnimationStatus != CircleAnimationStatus.PAUSE;
+            circleAnimationStatus != CircleAnimationStatus.pause;
         isThirdCircleRepeat =
-            circleAnimationStatus != CircleAnimationStatus.PAUSE;
+            circleAnimationStatus != CircleAnimationStatus.pause;
         widget.startAnimation = true;
       });
-      circleAnimationStatus = CircleAnimationStatus.START;
+      circleAnimationStatus = CircleAnimationStatus.start;
     }
   }
 
-  void stopCircleAnimation() {
-    if (circleAnimationStatus != CircleAnimationStatus.PAUSE) {
-      setState(() {
-        pausedFirstCircleWidgets = firstCircleWidgets.toList();
-        firstCircleWidgets.clear();
-        widgetMap.forEach((key, value) {
-          firstCircleWidgets.add(value);
-        });
-        isFirstCircleRepeat = false;
-        isSecondCircleRepeat = false;
-        isThirdCircleRepeat = false;
-        widget.startAnimation = false;
-      });
-      circleAnimationStatus = CircleAnimationStatus.PAUSE;
-    }
+
+  Future<void> setSchedulerForWidgetSize() async {
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      for (var element in firstCircleWidgets) {
+        firstCircleWidgetsSize.add(Size(
+            ((element.key as GlobalKey).currentContext?.size?.width ?? 0) / 2,
+            ((element.key as GlobalKey).currentContext?.size?.height ?? 0) /
+                2));
+      }
+      for (var element in secondCircleWidgets) {
+        secondCircleWidgetsSize.add(Size(
+            ((element.key as GlobalKey).currentContext?.size?.width ?? 0) / 2,
+            ((element.key as GlobalKey).currentContext?.size?.height ?? 0) / 2));
+      }
+      for (var element in thirdCircleWidgets) {
+        thirdCircleWidgetsSize.add(Size(
+            ((element.key as GlobalKey).currentContext?.size?.width ?? 0) / 2,
+            ((element.key as GlobalKey).currentContext?.size?.height ?? 0) / 2));
+      }
+      for (var element in centerCircleWidgets) {
+        centerCircleWidgetsSize.add(Size(
+            ((element.key as GlobalKey).currentContext?.size?.width ?? 0) / 2,
+            ((element.key as GlobalKey).currentContext?.size?.height ?? 0) / 2));
+      }
+      setState(() {});
+    });
   }
+
 }

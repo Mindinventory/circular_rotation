@@ -35,6 +35,8 @@ class DrawCirclePainter extends CustomPainter {
   /// It contains the double value.
   final double thirdCircleRadius;
 
+  final VoidCallback onDrawCompleteCallback;
+
   const DrawCirclePainter({
     required this.allCircleStrokeColor,
     required this.firstCircleStrokeColor,
@@ -50,6 +52,7 @@ class DrawCirclePainter extends CustomPainter {
     required this.firstCircleRadius,
     required this.secondCircleRadius,
     required this.thirdCircleRadius,
+    required this.onDrawCompleteCallback,
   });
 
   @override
@@ -78,6 +81,7 @@ class DrawCirclePainter extends CustomPainter {
         size: size,
       );
     }
+    onDrawCompleteCallback.call();
   }
 
   createFirstCircle({
