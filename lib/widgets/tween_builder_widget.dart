@@ -4,36 +4,38 @@ class TweenBuilderWidget extends StatelessWidget {
   final Widget child;
   final int currentElementPosition;
   final int totalElementsLength;
-  final int defaultAnimationDuration;
   final int animationDuration;
   final double circleRadius;
   final double circleRadians;
   final bool startAnimation;
   final List<Size> circleWidgetsSize;
-  final Curve curve;
-  final HashMap<int, Widget> mapWidgets;
+  final HashMap<int, Widget> mapWidgets = HashMap();
   final VoidCallback onEndCallback;
+  late PlanetWidgetModel _planetWidgetModel;
 
-  const TweenBuilderWidget({
+  TweenBuilderWidget({
     required this.child,
     required this.currentElementPosition,
     required this.totalElementsLength,
-    required this.defaultAnimationDuration,
     required this.animationDuration,
     required this.circleRadius,
     required this.circleRadians,
     required this.circleWidgetsSize,
     required this.startAnimation,
-    required this.curve,
-    required this.mapWidgets,
     required this.onEndCallback,
     Key? key,
   }) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
+    _planetWidgetModel = PlanetWidgetModel.of(context);
+    return _buildBody();
+  }
+
+  Widget _buildBody(){
     return TweenAnimationBuilder<double>(
-      curve: curve,
+      curve: _planetWidgetModel.curve,
       child: child,
       tween: Tween(
         begin: currentElementPosition.toDouble(),
@@ -44,7 +46,7 @@ class TweenBuilderWidget extends StatelessWidget {
       duration: Duration(
         milliseconds: (animationDuration != -1)
             ? animationDuration
-            : defaultAnimationDuration,
+            : _planetWidgetModel.defaultCircleAnimationDuration,
       ),
       onEnd: onEndCallback,
       builder: (BuildContext context, double size, Widget? child) {
@@ -70,16 +72,17 @@ class TweenBuilderWidget extends StatelessWidget {
         if (mapWidgets.containsKey(currentElementPosition)) {
           mapWidgets.update(
             currentElementPosition,
-            (value) => positionedWidget,
+                (value) => positionedWidget,
           );
         } else {
           mapWidgets.putIfAbsent(
             currentElementPosition,
-            () => positionedWidget,
+                () => positionedWidget,
           );
         }
         return mapWidgets[currentElementPosition]!;
       },
     );
   }
+
 }

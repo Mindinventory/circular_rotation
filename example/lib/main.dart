@@ -2,13 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:example/astro.dart';
 import 'package:example/constants/image_assets.dart';
 import 'package:flutter/material.dart';
-import 'package:planet_widget/widgets/planet_widget.dart';
+import 'package:planet_widget/planet_widget.dart';
 
 void main() {
   runApp(
-    MaterialApp(
+    const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const MyApp(),
+      home: MyApp(),
     ),
   );
 }
@@ -56,71 +56,69 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.fill,
-              image: AssetImage(
-                GALAXY_IMAGE,
-              ),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.fill,
+            image: AssetImage(
+              GALAXY_IMAGE,
             ),
           ),
-          child: Column(
-            children: [
-              Expanded(
-                child: _planetWidget,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
-                    child: const Text(
-                      'Start',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                    onTap: () {
-                      _planetWidget.startCircleAnimation();
-                    },
-                  ),
-                  InkWell(
-                    child: const Text(
-                      'Stop',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                    onTap: () {
-                      _planetWidget.stopCircleAnimation();
-                    },
-                  ),
-                  ElevatedButton(
-                    child: const Text(
-                      'Astro',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const Astro()));
-                    },
-                  ),
-                ],
-              ),
-            ],
-          ),
         ),
+        child: Column(
+          children: [
+            Expanded(
+              child: _planetWidget,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InkWell(
+                  child: const Text(
+                    'Start',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
+                  onTap: () {
+                    _planetWidget.startCircleAnimation();
+                  },
+                ),
+                InkWell(
+                  child: const Text(
+                    'Stop',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
+                  onTap: () {
+                    _planetWidget.stopCircleAnimation();
+                  },
+                ),
+                ElevatedButton(
+                  child: const Text(
+                    'Astro',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => const Astro()));
+                  },
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
-  PlanetWidget getPlanetWidget(){
+  PlanetWidget getPlanetWidget() {
     return PlanetWidget(
       allCircleStrokeWidth: 0.5,
       allCircleStrokeColor: Colors.white,
@@ -140,54 +138,46 @@ class _MyAppState extends State<MyApp> {
       ),
       firstCircleWidgets: List.generate(
         5,
-            (index) => Column(
+        (index) => Column(
           children: [
             CachedNetworkImage(
               width: 36,
               height: 40,
               imageUrl: firstCircleImagesUrl[index],
-              placeholder: (context, url) =>
-              const CircularProgressIndicator(),
-              errorWidget: (context, url, error) =>
-              const Icon(Icons.error),
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ],
         ),
       ),
       secondCircleWidgets: List.generate(
         5,
-            (index) => Column(
+        (index) => Column(
           children: [
             CachedNetworkImage(
               width: 36,
               height: 40,
               imageUrl: secondCircleImagesUrl[index],
-              placeholder: (context, url) =>
-              const CircularProgressIndicator(),
-              errorWidget: (context, url, error) =>
-              const Icon(Icons.error),
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ],
         ),
       ),
       thirdCircleWidgets: List.generate(
         5,
-            (index) => Column(
+        (index) => Column(
           children: [
             CachedNetworkImage(
               width: 36,
               height: 40,
               imageUrl: thirdCircleImagesUrl[index],
-              placeholder: (context, url) =>
-              const CircularProgressIndicator(),
-              errorWidget: (context, url, error) =>
-              const Icon(Icons.error),
+              placeholder: (context, url) => const CircularProgressIndicator(),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ],
         ),
       ),
-      curve: Curves.ease,
     );
   }
-
 }
