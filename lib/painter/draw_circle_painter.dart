@@ -1,81 +1,41 @@
 part of planet_widget;
 
 class DrawCirclePainter extends CustomPainter {
+
   static late ui.Size paintSize;
 
-  final double allCircleStrokeWidth;
-  final double firstCircleStrokeWidth;
-  final double secondCircleStrokeWidth;
-  final double thirdCircleStrokeWidth;
-
-  final Color allCircleStrokeColor;
-  final Color? firstCircleStrokeColor;
-  final Color? secondCircleStrokeColor;
-  final Color? thirdCircleStrokeColor;
-
-  final bool visibleFirstCircle;
-  final bool visibleSecondCircle;
-  final bool visibleThirdCircle;
-
-  /// Displays the first circle based on radius.
-  /// Radius starts from center.
-  ///
-  /// It contains the double value.
-  final double firstCircleRadius;
-
-  /// Displays the second circle based on radius.
-  /// Radius starts from center.
-  ///
-  /// It contains the double value.
-  final double secondCircleRadius;
-
-  /// Displays the third circle based on radius.
-  /// Radius starts from center.
-  ///
-  /// It contains the double value.
-  final double thirdCircleRadius;
-
+  final BuildContext context;
   final VoidCallback onDrawCompleteCallback;
 
-  const DrawCirclePainter({
-    required this.allCircleStrokeColor,
-    required this.firstCircleStrokeColor,
-    required this.secondCircleStrokeColor,
-    required this.thirdCircleStrokeColor,
-    required this.allCircleStrokeWidth,
-    required this.firstCircleStrokeWidth,
-    required this.secondCircleStrokeWidth,
-    required this.thirdCircleStrokeWidth,
-    required this.visibleFirstCircle,
-    required this.visibleSecondCircle,
-    required this.visibleThirdCircle,
-    required this.firstCircleRadius,
-    required this.secondCircleRadius,
-    required this.thirdCircleRadius,
+  late PlanetWidgetModel _planetWidgetModel;
+
+  DrawCirclePainter({
+    required this.context,
     required this.onDrawCompleteCallback,
   });
 
   @override
   void paint(Canvas canvas, Size size) {
+    _planetWidgetModel = PlanetWidgetModel.of(context);
     drawCircles(canvas, size);
   }
 
   drawCircles(Canvas canvas, Size size) {
     paintSize = size;
     _radius = (size.width < size.height) ? (size.width / 2) : (size.height / 2);
-    if (visibleFirstCircle) {
+    if (_planetWidgetModel.visibleFirstCircle) {
       createFirstCircle(
         canvas: canvas,
         size: size,
       );
     }
-    if (visibleSecondCircle) {
+    if (_planetWidgetModel.visibleSecondCircle) {
       createSecondCircle(
         canvas: canvas,
         size: size,
       );
     }
-    if (visibleThirdCircle) {
+    if (_planetWidgetModel.visibleThirdCircle) {
       createThirdCircle(
         canvas: canvas,
         size: size,
@@ -88,18 +48,18 @@ class DrawCirclePainter extends CustomPainter {
     required Canvas canvas,
     required Size size,
   }) async {
-    _firstRadius = _radius - firstCircleRadius;
+    _firstRadius = _radius - _planetWidgetModel.firstCircleRadius;
     createCircle(
       canvas: canvas,
       size: size,
       radius: _firstRadius,
       paint: getPaint(
-        color: (firstCircleStrokeColor != null)
-            ? firstCircleStrokeColor!
-            : allCircleStrokeColor,
-        strokeWidth: (firstCircleStrokeWidth != -1)
-            ? firstCircleStrokeWidth
-            : allCircleStrokeWidth,
+        color: (_planetWidgetModel.firstCircleStrokeColor != null)
+            ? _planetWidgetModel.firstCircleStrokeColor!
+            : _planetWidgetModel.allCircleStrokeColor,
+        strokeWidth: (_planetWidgetModel.firstCircleStrokeWidth != -1)
+            ? _planetWidgetModel.firstCircleStrokeWidth
+            : _planetWidgetModel.allCircleStrokeWidth,
       ),
     );
   }
@@ -108,18 +68,18 @@ class DrawCirclePainter extends CustomPainter {
     required Canvas canvas,
     required Size size,
   }) async {
-    _secondRadius = _firstRadius - secondCircleRadius;
+    _secondRadius = _firstRadius - _planetWidgetModel.secondCircleRadius;
     createCircle(
       canvas: canvas,
       size: size,
       radius: _secondRadius,
       paint: getPaint(
-        color: (secondCircleStrokeColor != null)
-            ? secondCircleStrokeColor!
-            : allCircleStrokeColor,
-        strokeWidth: (secondCircleStrokeWidth != -1)
-            ? secondCircleStrokeWidth
-            : allCircleStrokeWidth,
+        color: (_planetWidgetModel.secondCircleStrokeColor != null)
+            ? _planetWidgetModel.secondCircleStrokeColor!
+            : _planetWidgetModel.allCircleStrokeColor,
+        strokeWidth: (_planetWidgetModel.secondCircleStrokeWidth != -1)
+            ? _planetWidgetModel.secondCircleStrokeWidth
+            : _planetWidgetModel.allCircleStrokeWidth,
       ),
     );
   }
@@ -128,18 +88,18 @@ class DrawCirclePainter extends CustomPainter {
     required Canvas canvas,
     required Size size,
   }) {
-    _thirdRadius = _secondRadius - thirdCircleRadius;
+    _thirdRadius = _secondRadius - _planetWidgetModel.thirdCircleRadius;
     createCircle(
       canvas: canvas,
       size: size,
       radius: _thirdRadius,
       paint: getPaint(
-        color: (thirdCircleStrokeColor != null)
-            ? thirdCircleStrokeColor!
-            : allCircleStrokeColor,
-        strokeWidth: (thirdCircleStrokeWidth != -1)
-            ? thirdCircleStrokeWidth
-            : allCircleStrokeWidth,
+        color: (_planetWidgetModel.thirdCircleStrokeColor != null)
+            ? _planetWidgetModel.thirdCircleStrokeColor!
+            : _planetWidgetModel.allCircleStrokeColor,
+        strokeWidth: (_planetWidgetModel.thirdCircleStrokeWidth != -1)
+            ? _planetWidgetModel.thirdCircleStrokeWidth
+            : _planetWidgetModel.allCircleStrokeWidth,
       ),
     );
   }

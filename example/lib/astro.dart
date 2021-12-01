@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:example/constants/image_assets.dart';
 import 'package:flutter/material.dart';
-import 'package:planet_widget/widgets/planet_widget.dart';
+import 'package:planet_widget/planet_widget.dart';
 
 class Astro extends StatefulWidget {
   const Astro({Key? key}) : super(key: key);

@@ -1,19 +1,25 @@
 library planet_widget;
 
+import 'dart:async';
 import 'dart:collection';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:planet_widget/widgets/planet_widget_body.dart';
 
-part '../painter/draw_circle_painter.dart';
+part 'constants/enum.dart';
 
-part 'draw_circle_widgets.dart';
+part 'painter/draw_circle_painter.dart';
 
-part '../constants/enum.dart';
+part 'widgets/first_circle_widgets.dart';
+part 'widgets/second_circle_widgets.dart';
+part 'widgets/third_circle_widgets.dart';
+part 'widgets/center_circle_widgets.dart';
 
-part 'tween_builder_widget.dart';
+part 'widgets/tween_builder_widget.dart';
+part 'widgets/planet_widget_model.dart';
 
 late Offset _circleCenter;
 
@@ -21,6 +27,7 @@ double _radius = 0;
 double _firstRadius = 0;
 double _secondRadius = 0;
 double _thirdRadius = 0;
+StreamController<CircleAnimationStatus> controllerUserAction = StreamController<CircleAnimationStatus>.broadcast();
 
 class PlanetWidget extends StatefulWidget {
   /// Visibility of first circle.
@@ -184,12 +191,10 @@ class PlanetWidget extends StatefulWidget {
   /// Default value is Curves.linear
   final Curve curve;
 
-  final GlobalKey<_DrawCircleWidgetsState> _drawCircleWidgetsKey = GlobalKey();
-
   /// Create a planet Widget.
   ///
   /// All the arguments for You can customize your [PlanetWidget] as per your requirements.
-  PlanetWidget({
+  const PlanetWidget({
     this.centerWidget,
     this.firstCircleWidgets,
     this.secondCircleWidgets,
@@ -221,78 +226,53 @@ class PlanetWidget extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
+
   @override
   _PlanetWidgetState createState() => _PlanetWidgetState();
 
- void startCircleAnimation() {
-    _drawCircleWidgetsKey.currentState?.startCircleAnimation();
+  void startCircleAnimation() {
+    controllerUserAction.add(CircleAnimationStatus.start);
   }
 
   void stopCircleAnimation() {
-    _drawCircleWidgetsKey.currentState?.resetCircleAnimation();
+    controllerUserAction.add(CircleAnimationStatus.stop);
   }
-
 }
 
 class _PlanetWidgetState extends State<PlanetWidget> {
-  ValueNotifier<bool> isCirclesDrawn = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: DrawCirclePainter(
-          visibleFirstCircle: widget.visibleFirstCircle,
-          visibleSecondCircle: widget.visibleSecondCircle,
-          visibleThirdCircle: widget.visibleThirdCircle,
-          allCircleStrokeColor: widget.allCircleStrokeColor,
-          firstCircleStrokeColor: widget.firstCircleStrokeColor,
-          secondCircleStrokeColor: widget.secondCircleStrokeColor,
-          thirdCircleStrokeColor: widget.thirdCircleStrokeColor,
-          allCircleStrokeWidth: widget.allCircleStrokeWidth,
-          firstCircleStrokeWidth: widget.firstCircleStrokeWidth,
-          secondCircleStrokeWidth: widget.secondCircleStrokeWidth,
-          thirdCircleStrokeWidth: widget.thirdCircleStrokeWidth,
-          firstCircleRadius: widget.firstCircleRadius,
-          secondCircleRadius: widget.secondCircleRadius,
-          thirdCircleRadius: widget.thirdCircleRadius,
-          onDrawCompleteCallback: () {
-            setSchedulerForCircleDrawn();
-          }),
-      child: ValueListenableBuilder(
-        builder: (BuildContext context, bool value, Widget? child) {
-          return (value) ? _buildCircleWidgets() : Container();
-        },
-        valueListenable: isCirclesDrawn,
-      ),
-    );
-  }
-
-  void setSchedulerForCircleDrawn() {
-    WidgetsBinding.instance?.addPostFrameCallback(
-      (timeStamp) {
-        _buildCircleWidgets();
-        isCirclesDrawn.value = true;
-      },
-    );
-  }
-
-  Widget _buildCircleWidgets() {
-    return DrawCircleWidgets(
-      key: widget._drawCircleWidgetsKey,
-      centerWidget: widget.centerWidget,
-      firstCircleWidgets: widget.firstCircleWidgets,
-      secondCircleWidgets: widget.secondCircleWidgets,
-      thirdCircleWidgets: widget.thirdCircleWidgets,
+    return PlanetWidgetModel(
+      visibleFirstCircle: widget.visibleFirstCircle,
+      visibleSecondCircle: widget.visibleSecondCircle,
+      visibleThirdCircle: widget.visibleThirdCircle,
+      firstCircleRadius: widget.firstCircleRadius,
+      secondCircleRadius: widget.secondCircleRadius,
+      thirdCircleRadius: widget.thirdCircleRadius,
       firstCircleRadians: widget.firstCircleRadians,
       secondCircleRadians: widget.secondCircleRadians,
       thirdCircleRadians: widget.thirdCircleRadians,
+      firstCircleWidgets: widget.firstCircleWidgets,
+      secondCircleWidgets: widget.secondCircleWidgets,
+      thirdCircleWidgets: widget.thirdCircleWidgets,
+      centerWidget: widget.centerWidget,
+      allCircleStrokeColor: widget.allCircleStrokeColor,
+      firstCircleStrokeColor: widget.firstCircleStrokeColor,
+      secondCircleStrokeColor: widget.secondCircleStrokeColor,
+      thirdCircleStrokeColor: widget.thirdCircleStrokeColor,
+      allCircleStrokeWidth: widget.allCircleStrokeWidth,
+      firstCircleStrokeWidth: widget.firstCircleStrokeWidth,
+      secondCircleStrokeWidth: widget.secondCircleStrokeWidth,
+      thirdCircleStrokeWidth: widget.thirdCircleStrokeWidth,
       startAnimation: widget.startAnimation,
       repeatAnimation: widget.repeatAnimation,
+      defaultCircleAnimationDuration: widget.defaultCircleAnimationDuration,
       firstCircleAnimationDuration: widget.firstCircleAnimationDuration,
       secondCircleAnimationDuration: widget.secondCircleAnimationDuration,
       thirdCircleAnimationDuration: widget.thirdCircleAnimationDuration,
-      allCircleAnimationDuration: widget.defaultCircleAnimationDuration,
       curve: widget.curve,
+      child: const PlanetWidgetBody(),
     );
   }
 }
