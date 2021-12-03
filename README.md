@@ -29,6 +29,15 @@ This package supports drag & drop widgets inside the GridView.builder for multip
 ### Planet Widget.
 ![Planet Widget](https://github.com/Mindinventory/planet_widget/blob/main/assets/planet_widget.gif)
 
+#### Planet Widgets Animation Curve types.
+<table>
+  <tr>
+    <td>Linear</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/Screenshot_1582745092.png" width=270 height=480></td>
+  </tr>
+ </table>
 
 ## Usage
 
