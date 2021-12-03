@@ -9,10 +9,9 @@ class PlanetWidgetBody extends StatefulWidget {
 }
 
 class _PlanetWidgetBodyState extends State<PlanetWidgetBody> {
-  late PlanetWidgetModel planetWidgetModel;
+  late PlanetWidgetModel _planetWidgetModel;
   ValueNotifier<bool> isCirclesDrawn = ValueNotifier(false);
-
-  // final GlobalKey<_DrawCircleWidgetsState> _drawCircleWidgetsKey = GlobalKey();
+  late Size screen;
 
   @override
   void initState() {
@@ -22,7 +21,9 @@ class _PlanetWidgetBodyState extends State<PlanetWidgetBody> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    planetWidgetModel = PlanetWidgetModel.of(context);
+    screen = MediaQuery.of(context).size;
+    _planetWidgetModel =
+        PlanetWidgetInheritedModel.of(context).planetWidgetModel;
   }
 
   @override
@@ -30,15 +31,27 @@ class _PlanetWidgetBodyState extends State<PlanetWidgetBody> {
     return _buildBody();
   }
 
+  double getRadius(
+      {required double radius,
+      required double currentScreenSize,
+      required designSize}) {
+    return ((radius * currentScreenSize) / designSize);
+  }
+
   Widget _buildBody() {
-    return CustomPaint(
-      painter: _buildCirclePainter(),
-      child: ValueListenableBuilder(
-        builder: (BuildContext context, bool value, Widget? child) {
-          return (value) ? _buildCircleWidgets() : Container();
-        },
-        valueListenable: isCirclesDrawn,
-      ),
+    return Stack(
+      children: [
+        RepaintBoundary(
+          child:
+              CustomPaint(painter: _buildCirclePainter(), child: Container()),
+        ),
+        ValueListenableBuilder(
+          builder: (BuildContext context, bool value, Widget? child) {
+            return (value) ? _buildCircleWidgets() : Container();
+          },
+          valueListenable: isCirclesDrawn,
+        )
+      ],
     );
   }
 
@@ -56,6 +69,7 @@ class _PlanetWidgetBodyState extends State<PlanetWidgetBody> {
       (timeStamp) {
         _buildCircleWidgets();
         isCirclesDrawn.value = true;
+        controllerUserAction.add(CircleAnimationStatus.refreshScreen);
       },
     );
   }
@@ -63,10 +77,10 @@ class _PlanetWidgetBodyState extends State<PlanetWidgetBody> {
   Widget _buildCircleWidgets() {
     return Stack(
       children: const [
-        FirstCircleWidgets(),
-        SecondCircleWidgets(),
-        ThirdCircleWidgets(),
-        CenterCircleWidgets(),
+        CircleWidgetsFirst(),
+        CircleWidgetsSecond(),
+        CircleWidgetsThird(),
+        CircleWidgetCenter(),
       ],
     );
   }

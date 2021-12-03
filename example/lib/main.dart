@@ -70,48 +70,6 @@ class _MyAppState extends State<MyApp> {
             Expanded(
               child: _planetWidget,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InkWell(
-                  child: const Text(
-                    'Start',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
-                  onTap: () {
-                    _planetWidget.startCircleAnimation();
-                  },
-                ),
-                InkWell(
-                  child: const Text(
-                    'Stop',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
-                  onTap: () {
-                    _planetWidget.stopCircleAnimation();
-                  },
-                ),
-                ElevatedButton(
-                  child: const Text(
-                    'Astro',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const Astro()));
-                  },
-                ),
-              ],
-            ),
           ],
         ),
       ),
@@ -120,62 +78,72 @@ class _MyAppState extends State<MyApp> {
 
   PlanetWidget getPlanetWidget() {
     return PlanetWidget(
-      allCircleStrokeWidth: 0.5,
-      allCircleStrokeColor: Colors.white,
-      startAnimation: true,
-      repeatAnimation: true,
-      firstCircleAnimationDuration: 5000,
-      secondCircleAnimationDuration: 5000,
-      thirdCircleAnimationDuration: 5000,
-      centerWidget: CircleAvatar(
-        radius: 25,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(45),
-          child: Image.asset(
-            PROFILE_IMAGE,
+      planetWidgetProperty: PlanetWidgetModel(
+        defaultCircleStrokeWidth: 0.2,
+        defaultCircleStrokeColor: Colors.white,
+        startAnimation: true,
+        repeatAnimation: true,
+        firstCircleAnimationDuration: 5000,
+        secondCircleAnimationDuration: 7000,
+        thirdCircleAnimationDuration: 10000,
+        centerWidget: InkWell(
+          onTap: (){
+            PlanetWidget.eitherStartOrStopAnimation();
+          },
+          child: CircleAvatar(
+            radius: 25,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(45),
+              child: Image.asset(
+                PROFILE_IMAGE,
+              ),
+            ),
           ),
         ),
-      ),
-      firstCircleWidgets: List.generate(
-        5,
-        (index) => Column(
-          children: [
-            CachedNetworkImage(
-              width: 36,
-              height: 40,
-              imageUrl: firstCircleImagesUrl[index],
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
-          ],
+        firstCircleWidgets: List.generate(
+          5,
+          (index) => Column(
+            children: [
+              CachedNetworkImage(
+                width: 36,
+                height: 40,
+                imageUrl: firstCircleImagesUrl[index],
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
+            ],
+          ),
         ),
-      ),
-      secondCircleWidgets: List.generate(
-        5,
-        (index) => Column(
-          children: [
-            CachedNetworkImage(
-              width: 36,
-              height: 40,
-              imageUrl: secondCircleImagesUrl[index],
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
-          ],
+        secondCircleWidgets: List.generate(
+          5,
+          (index) => Column(
+            children: [
+              CachedNetworkImage(
+                width: 36,
+                height: 40,
+                imageUrl: secondCircleImagesUrl[index],
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
+            ],
+          ),
         ),
-      ),
-      thirdCircleWidgets: List.generate(
-        5,
-        (index) => Column(
-          children: [
-            CachedNetworkImage(
-              width: 36,
-              height: 40,
-              imageUrl: thirdCircleImagesUrl[index],
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
-          ],
+        thirdCircleWidgets: List.generate(
+          5,
+          (index) => Column(
+            children: [
+              CachedNetworkImage(
+                width: 36,
+                height: 40,
+                imageUrl: thirdCircleImagesUrl[index],
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -27,20 +27,20 @@ This package supports drag & drop widgets inside the GridView.builder for multip
 
 
 ### Planet Widget.
-![Planet Widget](https://github.com/Mindinventory/flutter_draggable_gridview/blob/main/assets/draggable_gridview.gif)
+![Planet Widget](https://github.com/Mindinventory/planet_widget/blob/main/assets/planet_widget.gif)
 
 
 ## Usage
 
 ### Example
     PlanetWidget(
-                  allCircleStrokeWidth: 0.5,
-                  allCircleStrokeColor: Colors.white,
+                  defaultCircleStrokeWidth: 0.2,
+                  defaultCircleStrokeColor: Colors.white,
                   startAnimation: true,
                   repeatAnimation: true,
-                  firstCircleAnimationDuration: 5,
-                  secondCircleAnimationDuration: 5,
-                  thirdCircleAnimationDuration: 5,
+                  firstCircleAnimationDuration: 5000,
+                  secondCircleAnimationDuration: 7000,
+                  thirdCircleAnimationDuration: 10000,
                   centerWidget: CircleAvatar(
                     radius: 25,
                     child: ClipRRect(
@@ -56,67 +56,70 @@ This package supports drag & drop widgets inside the GridView.builder for multip
                 )
 
 
-### Optional parameters
-
-##### centerWidget:
-- Displays the widget at center of circle.
-- It contains the **Widget**.
-
-##### firstCircleWidgets:
-- Displays the first circle widgets.
-- It contains the **List of Widgets**.
-
-##### secondCircleWidgets:
-- Displays the second circle widgets.
-- It contains the **List of Widgets**.
-
-##### thirdCircleWidgets:
-- Displays the third circle widgets.
-- It contains the **List of Widgets**.
+### Parameters
 
 ##### visibleFirstCircle:
-- Visibility of first circle. It contains bool value.
-- `true` = visible,
-- `false` = invisible.
+-  Visibility of first circle.
+- It contains bool value.
+- true = visible,
+- false = invisible.
 
 ##### visibleSecondCircle:
-- Visibility of second circle. It contains bool value.
-- `true` = visible,
-- `false` = invisible.
+-  Visibility of second circle.
+- It contains bool value.
+- true = visible,
+- false = invisible.
 
 ##### visibleThirdCircle:
-- Visibility of third circle. It contains bool value.
-- `true` = visible,
-- `false` = invisible.
+-  Visibility of third circle.
+- It contains bool value.
+- true = visible,
+- false = invisible.
 
 ##### firstCircleRadius:
 - Displays the first circle based on radius.
 - Radius starts from center.
-- It contains the **double** value.
+- It contains the double value.
 
 ##### secondCircleRadius:
 - Displays the second circle based on radius.
 - Radius starts from center.
-- It contains the **double** value.
+- It contains the double value.
 
 ##### thirdCircleRadius:
 - Displays the third circle based on radius.
 - Radius starts from center.
-- It contains the **double** value.
+- It contains the double value.
 
 ##### firstCircleRadians:
 - Displays the first circle widgets based on radians calculation.
-- It contains the **double** value.
+- It contains the double value.
 
 ##### secondCircleRadians:
 - Displays the second circle widgets based on radians calculation.
-- It contains the **double** value.
+- It contains the double value.
 
 ##### thirdCircleRadians:
 - Displays the third circle widgets based on radians calculation.
-- It contains the **double** value.
+- It contains the double value.
 
-##### allCircleStrokeColor:
+##### firstCircleWidgets:
+- Displays the first circle widgets.
+- It contains the List of Widgets.
+
+##### secondCircleWidgets:
+- Displays the second circle widgets.
+- It contains the List of Widgets.
+
+##### thirdCircleWidgets:
+- Displays the third circle widgets.
+- It contains the List of Widgets.
+
+##### centerWidget:
+- Displays the widget at center of circle.
+- It contains the Widget.
+
+##### defaultCircleStrokeColor:
 - Change the all circles stroke(line) color.
 - It contains **Color** value.
 - Default value is `Colors.black`
@@ -132,11 +135,11 @@ This package supports drag & drop widgets inside the GridView.builder for multip
 - Default value is `Colors.black`
 
 ##### thirdCircleStrokeColor:
-- Change the second circle stroke(line) color.
+- Change the third circle stroke(line) color.
 - It contains **Color** value.
 - Default value is `Colors.black`
 
-##### allCircleStrokeWidth:
+##### defaultCircleStrokeWidth:
 - Change the all circles stroke(line) width.
 - It contains **double** value.
 - Default value is `1.0`
@@ -169,7 +172,7 @@ This package supports drag & drop widgets inside the GridView.builder for multip
 - `true` = repeat the animation.
 - `false` = show animation only for one time.
 
-##### allCircleAnimationDuration:
+##### defaultCircleAnimationDuration:
 - Set the animation duration in milliseconds for all circles.
 - This parameter affects when **[startAnimation]** is true.
 - It contains **int** value.
@@ -191,7 +194,7 @@ This package supports drag & drop widgets inside the GridView.builder for multip
 
 ##### curve:
 - **[Curves],** a collection of common animation easing curves.
-- **[CurveTween]**, which can be used to apply a [Curve] to an** [Animation]**.
+- **[CurveTween]**, which can be used to apply a [Curve] to an **[Animation]**.
 - Default value is `Curves.linear`
 
 
