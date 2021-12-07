@@ -29,16 +29,6 @@ Planet widget, It is fully customisable package which allow you to set custom wi
 ### Planet Widget.
 ![Planet Widget](https://github.com/Mindinventory/planet_widget/blob/master/assets/planet_widget.gif)
 
-#### Planet Widget Animation Curve types.
-<table>
-  <tr>
-    <td style="text-align: center;">Ease</td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/Mindinventory/planet_widget/blob/master/assets/ease.gif" width=250 height=250></td>
-  </tr>
- </table>
-
 ## Usage
 
 ### Example
