@@ -77,7 +77,6 @@ class _MyAppState extends State<MyApp> {
         firstCircleWidgets: firstCircleImages,
         secondCircleWidgets: secondCircleImages,
         thirdCircleWidgets: thirdCircleImages,
-        curve: Curves.bounceOut
       ),
     );
   }
