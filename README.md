@@ -35,7 +35,7 @@ This package supports drag & drop widgets inside the GridView.builder for multip
     <td style="text-align: center; vertical-align: middle;">Linear</td>
   </tr>
   <tr>
-    <td>![Ease Animation](https://github.com/Mindinventory/planet_widget/blob/main/assets/planet_widget.gif)</td>
+    <td>https://github.com/Mindinventory/planet_widget/blob/main/assets/planet_widget.gif</td>
   </tr>
  </table>
 
