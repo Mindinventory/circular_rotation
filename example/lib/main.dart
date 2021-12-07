@@ -1,5 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:example/astro.dart';
 import 'package:example/constants/image_assets.dart';
 import 'package:flutter/material.dart';
 import 'package:planet_widget/planet_widget.dart';
@@ -21,34 +19,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var firstCircleImagesUrl = [
-    'http://clipart-library.com/images_k/transparent-globe/transparent-globe-6.png',
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b2712.png',
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b2707.png',
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b2708.png',
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b2709.png',
-  ];
-
-  var secondCircleImagesUrl = [
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b2703.png',
-    'http://assets.stickpng.com/images/5a00de3d0e8525eec2752ffe.png',
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b270a.png',
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b270d.png',
-    'http://assets.stickpng.com/thumbs/5a00de530e8525eec2752fff.png',
-  ];
-
-  var thirdCircleImagesUrl = [
-    'http://clipart-library.com/images_k/sun-transparent-background/sun-transparent-background-15.png',
-    'http://clipart-library.com/newhp/Uranus_PNG_Clip_Art-3007.png',
-    'http://assets.stickpng.com/thumbs/5f4e7876481e190004044f88.png',
-    'https://www.freepnglogos.com/uploads/mars-png/mars-spacepedia-solar-system-scope-28.png',
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b2704.png',
-  ];
-
   late PlanetWidget _planetWidget;
+  List<Widget> firstCircleImages = [];
+  List<Widget> secondCircleImages = [];
+  List<Widget> thirdCircleImages = [];
 
   @override
   void initState() {
+    generateImages();
     _planetWidget = getPlanetWidget();
     super.initState();
   }
@@ -70,48 +48,6 @@ class _MyAppState extends State<MyApp> {
             Expanded(
               child: _planetWidget,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                InkWell(
-                  child: const Text(
-                    'Start',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
-                  onTap: () {
-                    _planetWidget.startCircleAnimation();
-                  },
-                ),
-                InkWell(
-                  child: const Text(
-                    'Stop',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
-                  onTap: () {
-                    _planetWidget.stopCircleAnimation();
-                  },
-                ),
-                ElevatedButton(
-                  child: const Text(
-                    'Astro',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                    ),
-                  ),
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => const Astro()));
-                  },
-                ),
-              ],
-            ),
           ],
         ),
       ),
@@ -120,64 +56,55 @@ class _MyAppState extends State<MyApp> {
 
   PlanetWidget getPlanetWidget() {
     return PlanetWidget(
-      allCircleStrokeWidth: 0.5,
-      allCircleStrokeColor: Colors.white,
-      startAnimation: true,
-      repeatAnimation: true,
-      firstCircleAnimationDuration: 5000,
-      secondCircleAnimationDuration: 5000,
-      thirdCircleAnimationDuration: 5000,
-      centerWidget: CircleAvatar(
-        radius: 25,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(45),
+      planetWidgetProperty: PlanetWidgetModel(
+        defaultCircleStrokeWidth: 0.2,
+        defaultCircleStrokeColor: Colors.white,
+        startAnimation: true,
+        repeatAnimation: false,
+        firstCircleAnimationDuration: 5000,
+        secondCircleAnimationDuration: 7000,
+        thirdCircleAnimationDuration: 10000,
+        centerWidget: InkWell(
+          onTap: () {
+            PlanetWidget.eitherStartOrStopAnimation();
+          },
           child: Image.asset(
-            PROFILE_IMAGE,
+            CENTER_IMAGE,
+            width: 96,
+            height: 96,
           ),
         ),
-      ),
-      firstCircleWidgets: List.generate(
-        5,
-        (index) => Column(
-          children: [
-            CachedNetworkImage(
-              width: 36,
-              height: 40,
-              imageUrl: firstCircleImagesUrl[index],
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
-          ],
-        ),
-      ),
-      secondCircleWidgets: List.generate(
-        5,
-        (index) => Column(
-          children: [
-            CachedNetworkImage(
-              width: 36,
-              height: 40,
-              imageUrl: secondCircleImagesUrl[index],
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
-          ],
-        ),
-      ),
-      thirdCircleWidgets: List.generate(
-        5,
-        (index) => Column(
-          children: [
-            CachedNetworkImage(
-              width: 36,
-              height: 40,
-              imageUrl: thirdCircleImagesUrl[index],
-              placeholder: (context, url) => const CircularProgressIndicator(),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-            ),
-          ],
-        ),
+        firstCircleWidgets: firstCircleImages,
+        secondCircleWidgets: secondCircleImages,
+        thirdCircleWidgets: thirdCircleImages,
+        curve: Curves.bounceOut
       ),
     );
+  }
+
+  void generateImages() {
+    List.generate(15, (index) {
+      if (index > 10) {
+        firstCircleImages.add(
+          Image.asset(
+            'assets/planets_${index + 1}.png',
+            width: 48,
+            height: 48,
+          ),
+        );
+      } else if (index > 5) {
+        secondCircleImages.add(Image.asset(
+          'assets/planets_${index + 1}.png',
+          width: 48,
+          height: 48,
+        ));
+      } else {
+        thirdCircleImages.add(Image.asset(
+          'assets/planets_${index + 1}.png',
+          width: 48,
+          height: 48,
+        ));
+      }
+    });
   }
 }

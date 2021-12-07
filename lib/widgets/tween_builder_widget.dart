@@ -1,88 +1,57 @@
 part of planet_widget;
 
-class TweenBuilderWidget extends StatelessWidget {
-  final Widget child;
-  final int currentElementPosition;
-  final int totalElementsLength;
-  final int animationDuration;
-  final double circleRadius;
-  final double circleRadians;
-  final bool startAnimation;
-  final List<Size> circleWidgetsSize;
-  final HashMap<int, Widget> mapWidgets = HashMap();
-  final VoidCallback onEndCallback;
-  late PlanetWidgetModel _planetWidgetModel;
+class TweenBuilderWidget extends StatefulWidget {
+  final int index;
+  final double begin;
+  final double end;
 
-  TweenBuilderWidget({
-    required this.child,
-    required this.currentElementPosition,
-    required this.totalElementsLength,
+  final Curve curve;
+  final Widget child;
+
+  final int animationDuration;
+  final Widget Function(double size, Widget child) onBuild;
+  final VoidCallback onEndCallback;
+
+  const TweenBuilderWidget({
+    required this.index,
+    required this.begin,
+    required this.end,
     required this.animationDuration,
-    required this.circleRadius,
-    required this.circleRadians,
-    required this.circleWidgetsSize,
-    required this.startAnimation,
+    required this.curve,
+    required this.child,
+    required this.onBuild,
     required this.onEndCallback,
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<TweenBuilderWidget> createState() => _TweenBuilderWidgetState();
+}
+
+class _TweenBuilderWidgetState extends State<TweenBuilderWidget>
+    with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    _planetWidgetModel = PlanetWidgetModel.of(context);
     return _buildBody();
   }
 
-  Widget _buildBody(){
-    return TweenAnimationBuilder<double>(
-      curve: _planetWidgetModel.curve,
-      child: child,
+  Widget _buildBody() {
+     return TweenAnimationBuilder<double>(
+      curve: widget.curve,
+      child: widget.child,
       tween: Tween(
-        begin: currentElementPosition.toDouble(),
-        end: (startAnimation)
-            ? (currentElementPosition + totalElementsLength).toDouble()
-            : currentElementPosition.toDouble(),
+        begin: widget.begin.toDouble(),
+        end: widget.end,
       ),
       duration: Duration(
-        milliseconds: (animationDuration != -1)
-            ? animationDuration
-            : _planetWidgetModel.defaultCircleAnimationDuration,
+        milliseconds: widget.animationDuration,
       ),
-      onEnd: onEndCallback,
+      onEnd: (widget.index!=0) ? null : widget.onEndCallback,
       builder: (BuildContext context, double size, Widget? child) {
-        var elementPosition = size + circleRadians;
-        var radians = ((elementPosition) * 2 * math.pi) / totalElementsLength;
-        Offset pointOnCircle = Offset(
-          circleRadius * math.cos(radians) +
-              _circleCenter.dx -
-              ((circleWidgetsSize.length > currentElementPosition)
-                  ? circleWidgetsSize[currentElementPosition].width
-                  : 0),
-          circleRadius * math.sin(radians) +
-              _circleCenter.dy -
-              ((circleWidgetsSize.length > currentElementPosition)
-                  ? circleWidgetsSize[currentElementPosition].height
-                  : 0),
-        );
-        var positionedWidget = Positioned(
-          left: pointOnCircle.dx,
-          top: pointOnCircle.dy,
-          child: child!,
-        );
-        if (mapWidgets.containsKey(currentElementPosition)) {
-          mapWidgets.update(
-            currentElementPosition,
-                (value) => positionedWidget,
-          );
-        } else {
-          mapWidgets.putIfAbsent(
-            currentElementPosition,
-                () => positionedWidget,
-          );
-        }
-        return mapWidgets[currentElementPosition]!;
+        if(child==null) return Container();
+        return widget.onBuild.call(double.parse(size.toStringAsFixed(2)), child);
       },
     );
   }
-
 }
