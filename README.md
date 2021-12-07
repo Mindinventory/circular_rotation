@@ -23,7 +23,7 @@
 </a>
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="MIT License"></a>
 
-This package supports drag & drop widgets inside the GridView.builder for multiplatform. It provides all the properties which are available in Gridview.builder and easy to implement with the few lines of code.
+Planet widget, It is fully customisable package which allow you to set custom widget in circular manner.
 
 
 ### Planet Widget.
@@ -32,6 +32,42 @@ This package supports drag & drop widgets inside the GridView.builder for multip
 #### Planet Widget Animation Curve types.
 <table>
   <tr>
+    <td style="text-align: center;">Ease</td>
+    <td style="text-align: center;">linear</td>
+    <td style="text-align: center;">decelerate</td>
+    <td style="text-align: center;">fastLinearToSlowEaseIn</td>
+    <td style="text-align: center;">ease</td>
+    <td style="text-align: center;">easeIn</td>
+    <td style="text-align: center;">easeInToLinear</td>
+    <td style="text-align: center;">easeInSine</td>
+    <td style="text-align: center;">easeInQuad</td>
+    <td style="text-align: center;">easeInCubic</td>
+    <td style="text-align: center;">easeInQuart</td>
+    <td style="text-align: center;">easeInQuint</td>
+    <td style="text-align: center;">easeInExpo</td>
+    <td style="text-align: center;">easeInCirc</td>
+    <td style="text-align: center;">easeInBack</td>
+    <td style="text-align: center;">easeOut</td>
+    <td style="text-align: center;">linearToEaseOut</td>
+    <td style="text-align: center;">easeOutSine</td>
+    <td style="text-align: center;">easeOutQuad</td>
+    <td style="text-align: center;">easeOutCubic</td>
+    <td style="text-align: center;">easeOutQuart</td>
+    <td style="text-align: center;">easeOutQuint</td>
+    <td style="text-align: center;">easeOutExpo</td>
+    <td style="text-align: center;">easeOutCirc</td>
+    <td style="text-align: center;">easeOutBack</td>
+    <td style="text-align: center;">easeInOut</td>
+    <td style="text-align: center;">easeInOutSine</td>
+    <td style="text-align: center;">easeInOutQuad</td>
+    <td style="text-align: center;">easeInOutCubic</td>
+    <td style="text-align: center;">easeInOutCubicEmphasized</td>
+    <td style="text-align: center;">easeInOutQuart</td>
+    <td style="text-align: center;">easeInOutQuint</td>
+
+    <td style="text-align: center;">bounceOut</td>
+    <td style="text-align: center;">elasticIn</td>
+    <td style="text-align: center;">Ease</td>
     <td style="text-align: center;">Ease</td>
   </tr>
   <tr>
