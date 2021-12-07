@@ -33,42 +33,6 @@ Planet widget, It is fully customisable package which allow you to set custom wi
 <table>
   <tr>
     <td style="text-align: center;">Ease</td>
-    <td style="text-align: center;">linear</td>
-    <td style="text-align: center;">decelerate</td>
-    <td style="text-align: center;">fastLinearToSlowEaseIn</td>
-    <td style="text-align: center;">ease</td>
-    <td style="text-align: center;">easeIn</td>
-    <td style="text-align: center;">easeInToLinear</td>
-    <td style="text-align: center;">easeInSine</td>
-    <td style="text-align: center;">easeInQuad</td>
-    <td style="text-align: center;">easeInCubic</td>
-    <td style="text-align: center;">easeInQuart</td>
-    <td style="text-align: center;">easeInQuint</td>
-    <td style="text-align: center;">easeInExpo</td>
-    <td style="text-align: center;">easeInCirc</td>
-    <td style="text-align: center;">easeInBack</td>
-    <td style="text-align: center;">easeOut</td>
-    <td style="text-align: center;">linearToEaseOut</td>
-    <td style="text-align: center;">easeOutSine</td>
-    <td style="text-align: center;">easeOutQuad</td>
-    <td style="text-align: center;">easeOutCubic</td>
-    <td style="text-align: center;">easeOutQuart</td>
-    <td style="text-align: center;">easeOutQuint</td>
-    <td style="text-align: center;">easeOutExpo</td>
-    <td style="text-align: center;">easeOutCirc</td>
-    <td style="text-align: center;">easeOutBack</td>
-    <td style="text-align: center;">easeInOut</td>
-    <td style="text-align: center;">easeInOutSine</td>
-    <td style="text-align: center;">easeInOutQuad</td>
-    <td style="text-align: center;">easeInOutCubic</td>
-    <td style="text-align: center;">easeInOutCubicEmphasized</td>
-    <td style="text-align: center;">easeInOutQuart</td>
-    <td style="text-align: center;">easeInOutQuint</td>
-
-    <td style="text-align: center;">bounceOut</td>
-    <td style="text-align: center;">elasticIn</td>
-    <td style="text-align: center;">Ease</td>
-    <td style="text-align: center;">Ease</td>
   </tr>
   <tr>
     <td><img src="https://github.com/Mindinventory/planet_widget/blob/master/assets/ease.gif" width=250 height=250></td>
