@@ -23,7 +23,7 @@
 </a>
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="MIT License"></a>
 
-Planet widget, It is fully customisable package which allow you to set custom widget in circular manner.
+Planet widget, It is fully customizable package which allow you to set custom widget in circular manner.  It has provision for moving like solar system. There is customizable properties like speed of each round, round color, position of planet etc.
 
 
 ### Planet Widget.
