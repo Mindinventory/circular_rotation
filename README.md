@@ -54,19 +54,19 @@ Planet widget, It is fully customizable package which allow you to set custom wi
 ### Parameters
 
 ##### visibleFirstCircle:
--  Visibility of first circle.
+- Visibility of first circle.
 - It contains bool value.
 - true = visible,
 - false = invisible.
 
 ##### visibleSecondCircle:
--  Visibility of second circle.
+- Visibility of second circle.
 - It contains bool value.
 - true = visible,
 - false = invisible.
 
 ##### visibleThirdCircle:
--  Visibility of third circle.
+- Visibility of third circle.
 - It contains bool value.
 - true = visible,
 - false = invisible.
@@ -206,7 +206,7 @@ It would be great for us if the reporter can share the below things to understan
 - Screenshot/video with steps to reproduce the issue
 
 # LICENSE!
-Flutter Draggable GridView is [MIT-licensed](https://github.com/Mindinventory/flutter_draggable_gridview/blob/main/LICENSE "MIT-licensed").
+Planet Widget is [MIT-licensed](https://github.com/Mindinventory/planet_widget/blob/master/LICENSE "MIT-licensed").
 
 # Let us know!
 We’d be really happy if you send us links to your projects where you use our component. Just send an email to sales@mindinventory.com And do let us know if you have any questions or suggestion regarding our work.
