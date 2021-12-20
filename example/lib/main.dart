@@ -1,6 +1,6 @@
+import 'package:circular_rotation/circular_rotation.dart';
 import 'package:example/constants/image_assets.dart';
 import 'package:flutter/material.dart';
-import 'package:planet_widget/planet_widget.dart';
 
 void main() {
   runApp(
@@ -19,7 +19,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late PlanetWidget _planetWidget;
+  late CircularRotation _circularRotation;
   List<Widget> firstCircleImages = [];
   List<Widget> secondCircleImages = [];
   List<Widget> thirdCircleImages = [];
@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     generateImages();
-    _planetWidget = getPlanetWidget();
+    _circularRotation = getPlanetWidget();
     super.initState();
   }
 
@@ -39,14 +39,14 @@ class _MyAppState extends State<MyApp> {
           image: DecorationImage(
             fit: BoxFit.fill,
             image: AssetImage(
-              GALAXY_IMAGE,
+              Images.galaxy,
             ),
           ),
         ),
         child: Column(
           children: [
             Expanded(
-              child: _planetWidget,
+              child: _circularRotation,
             ),
           ],
         ),
@@ -54,56 +54,89 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  PlanetWidget getPlanetWidget() {
-    return PlanetWidget(
-      planetWidgetProperty: PlanetWidgetModel(
+  CircularRotation getPlanetWidget() {
+    return CircularRotation(
+      circularRotationProperty: CircularRotationModel(
         defaultCircleStrokeWidth: 0.2,
         defaultCircleStrokeColor: Colors.white,
         startAnimation: true,
         repeatAnimation: false,
-        firstCircleAnimationDuration: 5000,
+        firstCircleAnimationDuration: 10000,
         secondCircleAnimationDuration: 7000,
-        thirdCircleAnimationDuration: 10000,
+        thirdCircleAnimationDuration: 5000,
         centerWidget: InkWell(
           onTap: () {
-            PlanetWidget.eitherStartOrStopAnimation();
+            CircularRotation.eitherStartOrStopAnimation();
           },
-          child: Image.asset(
-            CENTER_IMAGE,
-            width: 96,
-            height: 96,
+          child: getProfile(
+            name: 'Tom',
+            image: Images.center,
+            radius: 45.0,
           ),
         ),
         firstCircleWidgets: firstCircleImages,
         secondCircleWidgets: secondCircleImages,
         thirdCircleWidgets: thirdCircleImages,
+        thirdCircleRadians: 3.0,
+        secondCircleRadians: 0.4,
+        firstCircleRadians: 0.8,
       ),
     );
   }
 
   void generateImages() {
-    List.generate(15, (index) {
-      if (index > 10) {
-        firstCircleImages.add(
-          Image.asset(
-            'assets/planets_${index + 1}.png',
-            width: 48,
-            height: 48,
+    var listOfNames = [
+      'Dad',
+      'Uncle P',
+      'Cindy',
+      'Sally',
+      'Sammy',
+      'Bob',
+      'Aria'
+    ];
+    firstCircleImages.add(
+      getProfile(name: listOfNames[4], image: Images.planet_5),
+    );
+    firstCircleImages.add(
+      getProfile(name: listOfNames[3], image: Images.planet_4),
+    );
+    firstCircleImages.add(
+      getProfile(name: listOfNames[6], image: Images.planet_7),
+    );
+    secondCircleImages.add(
+      getProfile(name: listOfNames[1], image: Images.planet_2),
+    );
+    secondCircleImages.add(
+      getProfile(name: listOfNames[2], image: Images.planet_3),
+    );
+    secondCircleImages.add(
+      getProfile(name: listOfNames[5], image: Images.planet_6),
+    );
+    thirdCircleImages.add(
+      getProfile(name: listOfNames[0], image: Images.planet_1),
+    );
+  }
+
+  Widget getProfile(
+      {required String name, required String image, double radius = 25}) {
+    return Column(
+      children: [
+        circularImage(image: image, radius: radius),
+        Text(
+          name,
+          style: const TextStyle(
+            color: Colors.white,
           ),
-        );
-      } else if (index > 5) {
-        secondCircleImages.add(Image.asset(
-          'assets/planets_${index + 1}.png',
-          width: 48,
-          height: 48,
-        ));
-      } else {
-        thirdCircleImages.add(Image.asset(
-          'assets/planets_${index + 1}.png',
-          width: 48,
-          height: 48,
-        ));
-      }
-    });
+        ),
+      ],
+    );
+  }
+
+  Widget circularImage({required String image, required double radius}) {
+    return CircleAvatar(
+      radius: radius,
+      backgroundImage: AssetImage(image),
+      backgroundColor: Colors.transparent,
+    );
   }
 }

@@ -1,6 +1,6 @@
-part of planet_widget;
+part of circular_rotation;
 
-class PlanetWidgetModel {
+class CircularRotationModel {
   /// Visibility of first circle.
   /// It contains bool value.
   ///
@@ -29,19 +29,19 @@ class PlanetWidgetModel {
   /// Radius starts from center.
   ///
   /// It contains the double value.
-  double firstCircleRadius;
+  double? firstCircleRadius;
 
   /// Displays the second circle based on radius.
   /// Radius starts from center.
   ///
   /// It contains the double value.
-  double secondCircleRadius;
+  double? secondCircleRadius;
 
   /// Displays the third circle based on radius.
   /// Radius starts from center.
   ///
   /// It contains the double value.
-  double thirdCircleRadius;
+  double? thirdCircleRadius;
 
   /// Displays the first circle widgets based on radians calculation.
   ///
@@ -103,27 +103,27 @@ class PlanetWidgetModel {
   /// Change the first circle stroke(line) width.
   /// It contains double value.
   /// Default value is 1.0
-  final double firstCircleStrokeWidth;
+  final double? firstCircleStrokeWidth;
 
   /// Change the second circle stroke(line) width.
   /// It contains double value.
   /// Default value is 1.0
-  final double secondCircleStrokeWidth;
+  final double? secondCircleStrokeWidth;
 
   /// Change the third circle stroke(line) width.
   /// It contains double value.
   /// Default value is 1.0
-  final double thirdCircleStrokeWidth;
+  final double? thirdCircleStrokeWidth;
 
-  /// Create the animation in planet widget.
+  /// Create the animation in circular rotation.
   /// it contains bool value:
   ///
-  /// true = display the planets with animation
+  /// true = display the circular widgets with animation
   ///
-  /// false = display the planets without animation
+  /// false = display the circular widgets without animation
   final bool startAnimation;
 
-  /// Repeat the animation in planet widget.
+  /// Repeat the animation in circular rotation widget.
   /// This parameter affects when [startAnimation] is true.
   /// it contains bool value.
   ///
@@ -142,19 +142,19 @@ class PlanetWidgetModel {
   /// This parameter affects when [startAnimation] is true.
   ///
   /// it contains [int] value.
-  final int firstCircleAnimationDuration;
+  final int? firstCircleAnimationDuration;
 
   /// Set the animation duration in seconds for the second circle.
   /// This parameter affects when [startAnimation] is true.
   ///
   /// it contains [int] value.
-  final int secondCircleAnimationDuration;
+  final int? secondCircleAnimationDuration;
 
   /// Set the animation duration in seconds for the third circle.
   /// This parameter affects when [startAnimation] is true.
   ///
   /// it contains [int] value.
-  final int thirdCircleAnimationDuration;
+  final int? thirdCircleAnimationDuration;
 
   ///  [Curves], a collection of common animation easing curves.
   ///  [CurveTween], which can be used to apply a [Curve] to an [Animation].
@@ -162,26 +162,28 @@ class PlanetWidgetModel {
   /// Default value is Curves.linear
   final Curve curve;
 
-  ///  [onEndFirstCallback] Once you set this then you will get the callback once first circle is completes the round.
+  ///  [onFirstAnimationEnd] Once you set this then you will get the callback once first circle is completes the round.
   ///
   /// Default value is null
-  final Function? onEndFirstCallback;
-  ///  [onEndSecondCallback] Once you set this then you will get the callback once first circle is completes the round.
-  ///
-  /// Default value is null
-  final Function? onEndSecondCallback;
-  ///  [onEndThirdCallback] Once you set this then you will get the callback once first circle is completes the round.
-  ///
-  /// Default value is null
-  final Function? onEndThirdCallback;
+  final Function? onFirstAnimationEnd;
 
-  PlanetWidgetModel({
+  ///  [onSecondAnimationEnd] Once you set this then you will get the callback once first circle is completes the round.
+  ///
+  /// Default value is null
+  final Function? onSecondAnimationEnd;
+
+  ///  [onThirdAnimationEnd] Once you set this then you will get the callback once first circle is completes the round.
+  ///
+  /// Default value is null
+  final Function? onThirdAnimationEnd;
+
+  CircularRotationModel({
     this.visibleFirstCircle = true,
     this.visibleSecondCircle = true,
     this.visibleThirdCircle = true,
-    this.firstCircleRadius = -1,
-    this.secondCircleRadius = -1,
-    this.thirdCircleRadius = -1,
+    this.firstCircleRadius,
+    this.secondCircleRadius,
+    this.thirdCircleRadius,
     this.firstCircleRadians = 0,
     this.secondCircleRadians = 0.5,
     this.thirdCircleRadians = 1,
@@ -194,19 +196,19 @@ class PlanetWidgetModel {
     this.secondCircleStrokeColor,
     this.thirdCircleStrokeColor,
     this.defaultCircleStrokeWidth = 1,
-    this.firstCircleStrokeWidth = -1,
-    this.secondCircleStrokeWidth = -1,
-    this.thirdCircleStrokeWidth = -1,
+    this.firstCircleStrokeWidth,
+    this.secondCircleStrokeWidth,
+    this.thirdCircleStrokeWidth,
     this.startAnimation = false,
     this.repeatAnimation = false,
-    this.defaultCircleAnimationDuration = -1,
-    this.firstCircleAnimationDuration = -1,
-    this.secondCircleAnimationDuration = -1,
-    this.thirdCircleAnimationDuration = 8,
+    this.defaultCircleAnimationDuration = 0,
+    this.firstCircleAnimationDuration,
+    this.secondCircleAnimationDuration,
+    this.thirdCircleAnimationDuration,
     this.curve = Curves.linear,
-    this.onEndFirstCallback,
-    this.onEndSecondCallback,
-    this.onEndThirdCallback,
+    this.onFirstAnimationEnd,
+    this.onSecondAnimationEnd,
+    this.onThirdAnimationEnd,
     Key? key,
   });
 }

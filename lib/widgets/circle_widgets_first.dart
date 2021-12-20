@@ -1,4 +1,4 @@
-part of planet_widget;
+part of circular_rotation;
 
 class CircleWidgetsFirst extends StatefulWidget {
   const CircleWidgetsFirst({Key? key}) : super(key: key);
@@ -8,42 +8,36 @@ class CircleWidgetsFirst extends StatefulWidget {
 }
 
 class _CircleWidgetsFirstState extends State<CircleWidgetsFirst> {
-  late PlanetWidgetModel _planetWidgetModel;
-
+  late CircularRotationModel _circularRotationModel;
   final List<Widget> _circleWidgets = [];
   final List<Size> _circleWidgetsSize = [];
   final ValueNotifier<bool> _refreshScreen = ValueNotifier(false);
   late CircleAnimationStatus _circleAnimationStatus;
   bool _startAnimation = false;
-  int totalElements = 0;
-  HashMap<int, Map<double, Widget>> _positionedWidgets = HashMap();
-
-  /// hasListener: We have added this variable because stream listener calls twice.
-  bool _hasListener = false;
+  int _totalElements = 0;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _planetWidgetModel =
-        PlanetWidgetInheritedModel.of(context).planetWidgetModel;
-    _circleAnimationStatus = (_planetWidgetModel.startAnimation)
-        ? CircleAnimationStatus.start
-        : CircleAnimationStatus.idle;
-    _startAnimation = _planetWidgetModel.startAnimation;
-    totalElements = _planetWidgetModel.firstCircleWidgets?.length ?? 0;
+    _circularRotationModel =
+        CircularRotationInheritedModel.of(context).circularRotationModel;
+    _circleAnimationStatus = _getCircleAnimationStatus();
+    _startAnimation = _circularRotationModel.startAnimation;
+    _totalElements = _circularRotationModel.firstCircleWidgets?.length ?? 0;
+  }
+
+  @override
+  void initState() {
+    _setSchedulerBinding();
+    _setListeners();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return _buildBody();
-  }
-
-  Widget _buildBody() {
-    _setSchedulerBinding();
-    _setListeners();
     return ValueListenableBuilder(
       valueListenable: _refreshScreen,
-      builder: (BuildContext context, value, Widget? child) {
+      builder: (_, __, ___) {
         _initData();
         return Stack(
           children: _circleWidgets,
@@ -52,67 +46,30 @@ class _CircleWidgetsFirstState extends State<CircleWidgetsFirst> {
     );
   }
 
+  CircleAnimationStatus _getCircleAnimationStatus() =>
+      (_circularRotationModel.startAnimation)
+          ? CircleAnimationStatus.start
+          : CircleAnimationStatus.idle;
+
   void _initData() {
     if (_circleWidgetsSize.isNotEmpty) {
       _circleWidgets.clear();
     }
-    if (_planetWidgetModel.firstCircleWidgets?.isNotEmpty ?? false) {
-      _planetWidgetModel.firstCircleWidgets?.asMap().forEach(
+    if (_circularRotationModel.firstCircleWidgets?.isNotEmpty ?? false) {
+      _circularRotationModel.firstCircleWidgets?.asMap().forEach(
         (index, child) {
           _circleWidgets.add(
-           TweenBuilderWidget(
+            TweenBuilderWidget(
               key: GlobalKey(),
               index: index,
               begin: index.toDouble(),
-              end: (_startAnimation)
-                  ? (index + totalElements).toDouble()
-                  : index.toDouble(),
-              animationDuration: (_planetWidgetModel.firstCircleAnimationDuration != -1)
-                    ? _planetWidgetModel.firstCircleAnimationDuration
-                    : _planetWidgetModel.defaultCircleAnimationDuration,
-              curve: _planetWidgetModel.curve,
+              end: _calculateWidgetEndPosition(index),
+              animationDuration: _calculateAnimationDuration(),
+              curve: _circularRotationModel.curve,
               child: child,
-              onBuild: (double size, Widget child) {
-                Widget positionedWidget;
-                if (_positionedWidgets.containsKey(index)) {
-                  Map<double, Widget>? mapPositioned = _positionedWidgets[index];
-                  if (mapPositioned?.containsKey(size) ?? false) {
-                    positionedWidget = mapPositioned?[size] ?? Container();
-                  } else {
-                    positionedWidget = calculatePositionedWidget(
-                      index: index,
-                      totalElements: totalElements,
-                      size: size,
-                      circleRadius: _firstRadius,
-                      circleRadians: _planetWidgetModel.firstCircleRadians,
-                      circleWidgetsSize: (_circleWidgetsSize.length > index) ? _circleWidgetsSize[index] : const Size(0, 0),
-                      child: child,
-                    );
-                    mapPositioned?.putIfAbsent(size, () => positionedWidget);
-                  }
-                } else {
-                  positionedWidget = calculatePositionedWidget(
-                    index: index,
-                    totalElements: totalElements,
-                    size: size,
-                    circleRadius: _firstRadius,
-                    circleRadians: _planetWidgetModel.firstCircleRadians,
-                    circleWidgetsSize: (_circleWidgetsSize.length > index) ? _circleWidgetsSize[index] : const Size(0, 0),
-                    child: child,
-                  );
-                  _positionedWidgets.putIfAbsent(
-                      index, () => {size: positionedWidget});
-                }
-                return positionedWidget;
-              },
-              onEndCallback: () {
-                _planetWidgetModel.onEndFirstCallback?.call();
-                if (_planetWidgetModel.repeatAnimation) {
-                  _refreshScreen.value = !_refreshScreen.value;
-                } else {
-                  _circleAnimationStatus = CircleAnimationStatus.stop;
-                }
-              },
+              onWidgetBuild: (size, child) =>
+                  _onWidgetBuild(index, size, child),
+              onAnimationEnd: _onAnimationEnd,
             ),
           );
         },
@@ -120,25 +77,52 @@ class _CircleWidgetsFirstState extends State<CircleWidgetsFirst> {
     }
   }
 
+  double _calculateWidgetEndPosition(int index) => (_startAnimation)
+      ? (index + _totalElements).toDouble()
+      : index.toDouble();
+
+  int _calculateAnimationDuration() =>
+      _circularRotationModel.firstCircleAnimationDuration ??
+      _circularRotationModel.defaultCircleAnimationDuration;
+
+  Widget _onWidgetBuild(int index, double size, Widget child) {
+    return CalculatePositionWidget(
+      index: index,
+      totalElements: _totalElements,
+      size: size,
+      circleRadius: _firstRadius,
+      circleRadians: _circularRotationModel.firstCircleRadians,
+      circleWidgetsSize: (_circleWidgetsSize.length > index)
+          ? _circleWidgetsSize[index]
+          : const Size(0, 0),
+      child: child,
+    );
+  }
+
+  _onAnimationEnd() {
+    _circularRotationModel.onFirstAnimationEnd?.call();
+    if (_circularRotationModel.repeatAnimation) {
+      _updateScreen();
+    } else {
+      _circleAnimationStatus = CircleAnimationStatus.stop;
+    }
+  }
+
   void _setSchedulerBinding() {
     SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
       for (var element in _circleWidgets) {
-        _circleWidgetsSize.add(Size(
-            ((element.key as GlobalKey).currentContext?.size?.width ?? 0) / 2,
-            ((element.key as GlobalKey).currentContext?.size?.height ?? 0) /
-                2));
+        _circleWidgetsSize.add(element.calculateWidgetHalfSize());
       }
-      _positionedWidgets.clear();
       _circleWidgets.clear();
-      _refreshScreen.value = !_refreshScreen.value;
+      _updateScreen();
     });
   }
 
-  void resetCircleAnimation() {
+  void _resetCircleAnimation() {
     if (_circleAnimationStatus != CircleAnimationStatus.stop) {
       _startAnimation = false;
       _circleAnimationStatus = CircleAnimationStatus.stop;
-      _refreshScreen.value = !_refreshScreen.value;
+      _updateScreen();
     }
   }
 
@@ -146,33 +130,30 @@ class _CircleWidgetsFirstState extends State<CircleWidgetsFirst> {
     if (_circleAnimationStatus != CircleAnimationStatus.start) {
       _startAnimation = true;
       _circleAnimationStatus = CircleAnimationStatus.start;
-      _refreshScreen.value = !_refreshScreen.value;
+      _updateScreen();
     }
   }
 
-  void eitherStartOrStop(){
+  void _eitherStartOrStop() {
     if (_circleAnimationStatus != CircleAnimationStatus.start) {
       _startCircleAnimation();
     } else {
-      resetCircleAnimation();
+      _resetCircleAnimation();
     }
   }
 
   void _updateScreen() {
-    _positionedWidgets.clear();
     _refreshScreen.value = !_refreshScreen.value;
   }
 
   void _setListeners() {
-    if (_hasListener) return;
-    _hasListener = true;
     controllerUserAction.stream.listen((event) {
       switch (event) {
         case CircleAnimationStatus.start:
           _startCircleAnimation();
           break;
         case CircleAnimationStatus.stop:
-          resetCircleAnimation();
+          _resetCircleAnimation();
           break;
         case CircleAnimationStatus.idle:
           break;
@@ -180,7 +161,7 @@ class _CircleWidgetsFirstState extends State<CircleWidgetsFirst> {
           _updateScreen();
           break;
         case CircleAnimationStatus.startStop:
-          eitherStartOrStop();
+          _eitherStartOrStop();
           break;
       }
     });

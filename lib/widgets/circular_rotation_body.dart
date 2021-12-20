@@ -1,29 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:planet_widget/planet_widget.dart';
+part of circular_rotation;
 
-class PlanetWidgetBody extends StatefulWidget {
-  const PlanetWidgetBody({Key? key}) : super(key: key);
+class CircularRotationBody extends StatefulWidget {
+  const CircularRotationBody({Key? key}) : super(key: key);
 
   @override
-  _PlanetWidgetBodyState createState() => _PlanetWidgetBodyState();
+  _CircularRotationBodyState createState() => _CircularRotationBodyState();
 }
 
-class _PlanetWidgetBodyState extends State<PlanetWidgetBody> {
-  late PlanetWidgetModel _planetWidgetModel;
+class _CircularRotationBodyState extends State<CircularRotationBody> {
   ValueNotifier<bool> isCirclesDrawn = ValueNotifier(false);
-  late Size screen;
 
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    screen = MediaQuery.of(context).size;
-    _planetWidgetModel =
-        PlanetWidgetInheritedModel.of(context).planetWidgetModel;
   }
 
   @override
@@ -46,8 +35,8 @@ class _PlanetWidgetBodyState extends State<PlanetWidgetBody> {
               CustomPaint(painter: _buildCirclePainter(), child: Container()),
         ),
         ValueListenableBuilder(
-          builder: (BuildContext context, bool value, Widget? child) {
-            return (value) ? _buildCircleWidgets() : Container();
+          builder: (_, bool value, __) {
+            return (value) ? const _CircleWidgets() : Container();
           },
           valueListenable: isCirclesDrawn,
         )
@@ -58,7 +47,7 @@ class _PlanetWidgetBodyState extends State<PlanetWidgetBody> {
   CustomPainter _buildCirclePainter() {
     return DrawCirclePainter(
       context: context,
-      onDrawCompleteCallback: () {
+      onCircleDrawComplete: () {
         setSchedulerForCircleDrawn();
       },
     );
@@ -67,14 +56,19 @@ class _PlanetWidgetBodyState extends State<PlanetWidgetBody> {
   void setSchedulerForCircleDrawn() {
     WidgetsBinding.instance?.addPostFrameCallback(
       (timeStamp) {
-        _buildCircleWidgets();
+        const _CircleWidgets();
         isCirclesDrawn.value = true;
         controllerUserAction.add(CircleAnimationStatus.refreshScreen);
       },
     );
   }
+}
 
-  Widget _buildCircleWidgets() {
+class _CircleWidgets extends StatelessWidget {
+  const _CircleWidgets({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: const [
         CircleWidgetsFirst(),
