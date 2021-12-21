@@ -1,6 +1,6 @@
 # circular_rotation
 
-<a href="https://github.com/Mindinventory/planet_widget/stargazers">
+<a href="https://github.com/Mindinventory/circular_rotation/stargazers">
 <img src="https://img.shields.io/github/stars/Mindinventory/circular_rotation?style=social" alt="circular_rotation Git Stars">
 </a>
 <a href="https://developer.android.com" style="pointer-events: stroke;" target="_blank">
@@ -27,7 +27,7 @@ Circular rotation, It is fully customizable package which allow you to set custo
 
 
 ### Circular Rotation
-![Circular Rotation](https://github.com/Mindinventory/planet_widget/blob/master/assets/circular_rotation.gif)
+![Circular Rotation](https://github.com/Mindinventory/circular_rotation/blob/master/assets/circular_rotation.gif)
 
 ## Usage
 
@@ -206,7 +206,7 @@ It would be great for us if the reporter can share the below things to understan
 - Screenshot/video with steps to reproduce the issue
 
 # LICENSE!
-Circular Rotation is [MIT-licensed](https://github.com/Mindinventory/planet_widget/blob/master/LICENSE "MIT-licensed").
+Circular Rotation is [MIT-licensed](https://github.com/Mindinventory/circular_rotation/blob/master/LICENSE "MIT-licensed").
 
 # Let us know!
 We’d be really happy if you send us links to your projects where you use our component. Just send an email to sales@mindinventory.com And do let us know if you have any questions or suggestion regarding our work.

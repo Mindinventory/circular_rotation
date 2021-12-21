@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'constants/const.dart';
 import 'constants/dimens.dart';
-import 'constants/image_assets.dart';
+import 'constants/images.dart';
 import 'constants/strings.dart';
 
 void main() {
