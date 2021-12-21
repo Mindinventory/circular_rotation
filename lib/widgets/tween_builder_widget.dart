@@ -1,4 +1,4 @@
-part of planet_widget;
+part of circular_rotation;
 
 class TweenBuilderWidget extends StatefulWidget {
   final int index;
@@ -9,8 +9,8 @@ class TweenBuilderWidget extends StatefulWidget {
   final Widget child;
 
   final int animationDuration;
-  final Widget Function(double size, Widget child) onBuild;
-  final VoidCallback onEndCallback;
+  final Widget Function(double size, Widget child) onWidgetBuild;
+  final VoidCallback onAnimationEnd;
 
   const TweenBuilderWidget({
     required this.index,
@@ -19,8 +19,8 @@ class TweenBuilderWidget extends StatefulWidget {
     required this.animationDuration,
     required this.curve,
     required this.child,
-    required this.onBuild,
-    required this.onEndCallback,
+    required this.onWidgetBuild,
+    required this.onAnimationEnd,
     Key? key,
   }) : super(key: key);
 
@@ -30,14 +30,9 @@ class TweenBuilderWidget extends StatefulWidget {
 
 class _TweenBuilderWidgetState extends State<TweenBuilderWidget>
     with TickerProviderStateMixin {
-
   @override
   Widget build(BuildContext context) {
-    return _buildBody();
-  }
-
-  Widget _buildBody() {
-     return TweenAnimationBuilder<double>(
+    return TweenAnimationBuilder<double>(
       curve: widget.curve,
       child: widget.child,
       tween: Tween(
@@ -47,10 +42,11 @@ class _TweenBuilderWidgetState extends State<TweenBuilderWidget>
       duration: Duration(
         milliseconds: widget.animationDuration,
       ),
-      onEnd: (widget.index!=0) ? null : widget.onEndCallback,
-      builder: (BuildContext context, double size, Widget? child) {
-        if(child==null) return Container();
-        return widget.onBuild.call(double.parse(size.toStringAsFixed(2)), child);
+      onEnd: (widget.index != 0) ? null : widget.onAnimationEnd,
+      builder: (_, double size, Widget? child) {
+        if (child == null) return Container();
+        return widget.onWidgetBuild
+            .call(double.parse(size.toStringAsFixed(2)), child);
       },
     );
   }
