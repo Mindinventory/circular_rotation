@@ -1,4 +1,4 @@
-part of planet_widget;
+part of circular_rotation;
 
 enum CircleAnimationStatus {
   idle,

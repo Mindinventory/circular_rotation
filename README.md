@@ -1,7 +1,7 @@
-# planet_widget
+# circular_rotation
 
 <a href="https://github.com/Mindinventory/planet_widget/stargazers">
-<img src="https://img.shields.io/github/stars/Mindinventory/planet_widget?style=social" alt="planet_widget Git Stars">
+<img src="https://img.shields.io/github/stars/Mindinventory/circular_rotation?style=social" alt="circular_rotation Git Stars">
 </a>
 <a href="https://developer.android.com" style="pointer-events: stroke;" target="_blank">
 <img src="https://img.shields.io/badge/platform-android-blue">
@@ -23,26 +23,16 @@
 </a>
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="MIT License"></a>
 
-This package supports drag & drop widgets inside the GridView.builder for multiplatform. It provides all the properties which are available in Gridview.builder and easy to implement with the few lines of code.
+Circular rotation, It is fully customizable package which allow you to set custom widget in circular manner. It has provision for moving like solar system. There is customizable properties like speed of each round, round color, position of circular widget etc.
 
 
-### Planet Widget.
-![Planet Widget](https://github.com/Mindinventory/planet_widget/blob/main/assets/planet_widget.gif)
-
-#### Planet Widget Animation Curve types.
-<table>
-  <tr>
-    <td style="text-align: center; vertical-align: middle;">Linear</td>
-  </tr>
-  <tr>
-    <td><img src="screenshots/Screenshot_1582745092.png" width=270 height=480></td>
-  </tr>
- </table>
+### Circular Rotation
+![Circular Rotation](https://github.com/Mindinventory/planet_widget/blob/master/assets/circular_rotation.gif)
 
 ## Usage
 
 ### Example
-    PlanetWidget(
+    CircularRotation(
                   defaultCircleStrokeWidth: 0.2,
                   defaultCircleStrokeColor: Colors.white,
                   startAnimation: true,
@@ -50,14 +40,10 @@ This package supports drag & drop widgets inside the GridView.builder for multip
                   firstCircleAnimationDuration: 5000,
                   secondCircleAnimationDuration: 7000,
                   thirdCircleAnimationDuration: 10000,
-                  centerWidget: CircleAvatar(
-                    radius: 25,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(45),
-                      child: Image.asset(
-                        PROFILE_IMAGE,
-                      ),
-                    ),
+                  centerWidget: Image.asset(
+                    CENTER_IMAGE,
+                    width: 96,
+                    height: 96,
                   ),
                   firstCircleWidgets: [],
                   secondCircleWidgets: [],
@@ -68,19 +54,19 @@ This package supports drag & drop widgets inside the GridView.builder for multip
 ### Parameters
 
 ##### visibleFirstCircle:
--  Visibility of first circle.
+- Visibility of first circle.
 - It contains bool value.
 - true = visible,
 - false = invisible.
 
 ##### visibleSecondCircle:
--  Visibility of second circle.
+- Visibility of second circle.
 - It contains bool value.
 - true = visible,
 - false = invisible.
 
 ##### visibleThirdCircle:
--  Visibility of third circle.
+- Visibility of third circle.
 - It contains bool value.
 - true = visible,
 - false = invisible.
@@ -169,13 +155,13 @@ This package supports drag & drop widgets inside the GridView.builder for multip
 - Default value is `1.0`
 
 ##### startAnimation:
-- Create the animation in **Planet Widget**.
+- Create the animation in **Circular Rotation**.
 - It contains **bool** value:
-- `true` = display the planets with animation
-- `false` = display the planets without animation
+- `true` = display the circular widgets with animation
+- `false` = display the circular widgets without animation
 
 ##### repeatAnimation:
-- Repeat the animation in **Planet Widget**.
+- Repeat the animation in **Circular Rotation**.
 - This parameter affects when **[startAnimation]** is true.
 - It contains **bool** value.
 - `true` = repeat the animation.
@@ -220,7 +206,7 @@ It would be great for us if the reporter can share the below things to understan
 - Screenshot/video with steps to reproduce the issue
 
 # LICENSE!
-Flutter Draggable GridView is [MIT-licensed](https://github.com/Mindinventory/flutter_draggable_gridview/blob/main/LICENSE "MIT-licensed").
+Circular Rotation is [MIT-licensed](https://github.com/Mindinventory/planet_widget/blob/master/LICENSE "MIT-licensed").
 
 # Let us know!
 We’d be really happy if you send us links to your projects where you use our component. Just send an email to sales@mindinventory.com And do let us know if you have any questions or suggestion regarding our work.

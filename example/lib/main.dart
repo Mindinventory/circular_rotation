@@ -1,8 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:example/astro.dart';
-import 'package:example/constants/image_assets.dart';
+import 'package:circular_rotation/circular_rotation.dart';
 import 'package:flutter/material.dart';
-import 'package:planet_widget/planet_widget.dart';
+
+import 'constants/const.dart';
+import 'constants/dimens.dart';
+import 'constants/image_assets.dart';
+import 'constants/strings.dart';
 
 void main() {
   runApp(
@@ -21,35 +23,13 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var firstCircleImagesUrl = [
-    'http://clipart-library.com/images_k/transparent-globe/transparent-globe-6.png',
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b2712.png',
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b2707.png',
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b2708.png',
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b2709.png',
-  ];
-
-  var secondCircleImagesUrl = [
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b2703.png',
-    'http://assets.stickpng.com/images/5a00de3d0e8525eec2752ffe.png',
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b270a.png',
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b270d.png',
-    'http://assets.stickpng.com/thumbs/5a00de530e8525eec2752fff.png',
-  ];
-
-  var thirdCircleImagesUrl = [
-    'http://clipart-library.com/images_k/sun-transparent-background/sun-transparent-background-15.png',
-    'http://clipart-library.com/newhp/Uranus_PNG_Clip_Art-3007.png',
-    'http://assets.stickpng.com/thumbs/5f4e7876481e190004044f88.png',
-    'https://www.freepnglogos.com/uploads/mars-png/mars-spacepedia-solar-system-scope-28.png',
-    'https://assets.stickpng.com/images/580b585b2edbce24c47b2704.png',
-  ];
-
-  late PlanetWidget _planetWidget;
+  final List<Widget> _firstCircleImages = [];
+  final List<Widget> _secondCircleImages = [];
+  final List<Widget> _thirdCircleImages = [];
 
   @override
   void initState() {
-    _planetWidget = getPlanetWidget();
+    generateImages();
     super.initState();
   }
 
@@ -61,91 +41,121 @@ class _MyAppState extends State<MyApp> {
           image: DecorationImage(
             fit: BoxFit.fill,
             image: AssetImage(
-              GALAXY_IMAGE,
+              Images.galaxy,
             ),
           ),
         ),
-        child: Column(
-          children: [
-            Expanded(
-              child: _planetWidget,
+        child: CircularRotation(
+          circularRotationProperty: CircularRotationModel(
+            defaultCircleStrokeWidth: Dimens.strokeSmall,
+            defaultCircleStrokeColor: Colors.white,
+            startAnimation: true,
+            repeatAnimation: false,
+            firstCircleAnimationDuration:
+                Constants.firstCircleAnimationDurationInMilliseconds,
+            secondCircleAnimationDuration:
+                Constants.secondCircleAnimationDurationInMilliseconds,
+            thirdCircleAnimationDuration:
+                Constants.thirdCircleAnimationDurationInMilliseconds,
+            centerWidget: const InkWell(
+              onTap: CircularRotation.eitherStartOrStopAnimation,
+              child: _GetProfile(
+                name: Strings.tom,
+                image: Images.center,
+                radius: Dimens.radiusLarge,
+              ),
             ),
-          ],
+            firstCircleWidgets: _firstCircleImages,
+            secondCircleWidgets: _secondCircleImages,
+            thirdCircleWidgets: _thirdCircleImages,
+            thirdCircleRadians: Dimens.thirdCircleRadians,
+            secondCircleRadians: Dimens.secondCircleRadians,
+            firstCircleRadians: Dimens.firstCircleRadians,
+          ),
         ),
       ),
     );
   }
 
-  PlanetWidget getPlanetWidget() {
-    return PlanetWidget(
-      planetWidgetProperty: PlanetWidgetModel(
-        defaultCircleStrokeWidth: 0.2,
-        defaultCircleStrokeColor: Colors.white,
-        startAnimation: true,
-        repeatAnimation: true,
-        firstCircleAnimationDuration: 5000,
-        secondCircleAnimationDuration: 7000,
-        thirdCircleAnimationDuration: 10000,
-        centerWidget: InkWell(
-          onTap: (){
-            PlanetWidget.eitherStartOrStopAnimation();
-          },
-          child: CircleAvatar(
-            radius: 25,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(45),
-              child: Image.asset(
-                PROFILE_IMAGE,
-              ),
-            ),
+  void generateImages() {
+    var listOfNames = [
+      Strings.dad,
+      Strings.uncleP,
+      Strings.cindy,
+      Strings.sally,
+      Strings.sammy,
+      Strings.bob,
+      Strings.aria,
+    ];
+
+    /// Adding images into first circle.
+    _firstCircleImages.add(
+      _GetProfile(name: listOfNames[4], image: Images.planet_5),
+    );
+    _firstCircleImages.add(
+      _GetProfile(name: listOfNames[3], image: Images.planet_4),
+    );
+    _firstCircleImages.add(
+      _GetProfile(name: listOfNames[6], image: Images.planet_7),
+    );
+
+    /// Adding images into second circle.
+    _secondCircleImages.add(
+      _GetProfile(name: listOfNames[1], image: Images.planet_2),
+    );
+    _secondCircleImages.add(
+      _GetProfile(name: listOfNames[2], image: Images.planet_3),
+    );
+    _secondCircleImages.add(
+      _GetProfile(name: listOfNames[5], image: Images.planet_6),
+    );
+
+    /// Adding images into third circle.
+    _thirdCircleImages.add(
+      _GetProfile(name: listOfNames[0], image: Images.planet_1),
+    );
+  }
+}
+
+class _GetProfile extends StatelessWidget {
+  const _GetProfile({
+    required this.name,
+    required this.image,
+    this.radius = Dimens.radiusNormal,
+    Key? key,
+  }) : super(key: key);
+  final String name;
+  final String image;
+  final double radius;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        _CircularImage(image: image, radius: radius),
+        Text(
+          name,
+          style: const TextStyle(
+            color: Colors.white,
           ),
         ),
-        firstCircleWidgets: List.generate(
-          5,
-          (index) => Column(
-            children: [
-              CachedNetworkImage(
-                width: 36,
-                height: 40,
-                imageUrl: firstCircleImagesUrl[index],
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
-            ],
-          ),
-        ),
-        secondCircleWidgets: List.generate(
-          5,
-          (index) => Column(
-            children: [
-              CachedNetworkImage(
-                width: 36,
-                height: 40,
-                imageUrl: secondCircleImagesUrl[index],
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
-            ],
-          ),
-        ),
-        thirdCircleWidgets: List.generate(
-          5,
-          (index) => Column(
-            children: [
-              CachedNetworkImage(
-                width: 36,
-                height: 40,
-                imageUrl: thirdCircleImagesUrl[index],
-                placeholder: (context, url) =>
-                    const CircularProgressIndicator(),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ),
-            ],
-          ),
-        ),
-      ),
+      ],
+    );
+  }
+}
+
+class _CircularImage extends StatelessWidget {
+  const _CircularImage({required this.image, required this.radius, Key? key})
+      : super(key: key);
+  final String image;
+  final double radius;
+
+  @override
+  Widget build(BuildContext context) {
+    return CircleAvatar(
+      radius: radius,
+      backgroundImage: AssetImage(image),
+      backgroundColor: Colors.transparent,
     );
   }
 }
