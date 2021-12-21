@@ -35,23 +35,26 @@ Circular rotation, It is fully customizable package which allow you to set custo
 ## Usage
 
 ### Example
-    CircularRotation(
-                  defaultCircleStrokeWidth: 0.2,
-                  defaultCircleStrokeColor: Colors.white,
-                  startAnimation: true,
-                  repeatAnimation: true,
-                  firstCircleAnimationDuration: 5000,
-                  secondCircleAnimationDuration: 7000,
-                  thirdCircleAnimationDuration: 10000,
-                  centerWidget: Image.asset(
-                    CENTER_IMAGE,
-                    width: 96,
-                    height: 96,
-                  ),
-                  firstCircleWidgets: [],
-                  secondCircleWidgets: [],
-                  thirdCircleWidgets: [],
-                )
+
+```
+CircularRotation(
+    defaultCircleStrokeWidth: 0.2,
+    defaultCircleStrokeColor: Colors.white,
+    startAnimation: true,
+    repeatAnimation: true,
+    firstCircleAnimationDuration: 5000,
+    secondCircleAnimationDuration: 7000,
+    thirdCircleAnimationDuration: 10000,
+    centerWidget: Image.asset(
+        CENTER_IMAGE,
+        width: 96,
+        height: 96,
+    ),
+    firstCircleWidgets: [],
+    secondCircleWidgets: [],
+    thirdCircleWidgets: [],
+)
+```
 
 
 ### Parameters
