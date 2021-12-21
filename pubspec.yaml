@@ -1,7 +1,7 @@
 name: circular_rotation
-description: A new Flutter project.
+description: It is fully customizable package which allow you to set custom widget in circular manner.
 version: 0.0.1
-homepage:
+homepage: https://github.com/Mindinventory/circular_rotation
 
 environment:
   sdk: ">=2.12.0 <3.0.0"

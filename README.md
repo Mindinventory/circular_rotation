@@ -1,5 +1,8 @@
 # circular_rotation
 
+<a href="https://pub.dev/packages/circular_rotation">
+<img src="https://img.shields.io/pub/v/circular_rotation?label=circular_rotation" alt="circular_rotation version">
+</a>
 <a href="https://github.com/Mindinventory/circular_rotation/stargazers">
 <img src="https://img.shields.io/github/stars/Mindinventory/circular_rotation?style=social" alt="circular_rotation Git Stars">
 </a>
