@@ -16,7 +16,7 @@ class CircularRotationInheritedModel
     CircularRotationInheritedModel? circularRotationInheritedModel = context
         .dependOnInheritedWidgetOfExactType<CircularRotationInheritedModel>();
     assert(circularRotationInheritedModel != null,
-        'CircularRotationInheritedModel not initialized');
+        Strings.circularRotationInheritedModelNotInitialized);
     return circularRotationInheritedModel!;
   }
 

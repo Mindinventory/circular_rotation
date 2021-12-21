@@ -44,10 +44,11 @@ class DrawCirclePainter extends CustomPainter {
     onCircleDrawComplete.call();
   }
 
+  /// Calculating radius with divide by 2 of screen width and height.
   double _calculateRadius(Canvas canvas, Size size) =>
       (size.width < size.height) ? (size.width / 2) : (size.height / 2);
 
-  /// Calculating radius with divide by 2 of screen width and height.
+  /// Calculating offset with divide by 2 of screen width and height.
   ui.Offset _calculateCircleOffset(Size size) =>
       Offset(size.width / 2, size.height / 2);
 

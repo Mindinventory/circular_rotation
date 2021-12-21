@@ -43,7 +43,7 @@ class _TweenBuilderWidgetState extends State<TweenBuilderWidget>
         milliseconds: widget.animationDuration,
       ),
       onEnd: (widget.index != 0) ? null : widget.onAnimationEnd,
-      builder: (BuildContext context, double size, Widget? child) {
+      builder: (_, double size, Widget? child) {
         if (child == null) return Container();
         return widget.onWidgetBuild
             .call(double.parse(size.toStringAsFixed(2)), child);

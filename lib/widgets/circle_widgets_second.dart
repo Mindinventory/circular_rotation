@@ -133,13 +133,10 @@ class _CircleWidgetsSecondState extends State<CircleWidgetsSecond> {
     }
   }
 
-  void _eitherStartOrStop() {
-    if (_circleAnimationStatus != CircleAnimationStatus.start) {
-      _startCircleAnimation();
-    } else {
-      _resetCircleAnimation();
-    }
-  }
+  void _eitherStartOrStop() =>
+      (_circleAnimationStatus != CircleAnimationStatus.start)
+          ? _startCircleAnimation()
+          : _resetCircleAnimation();
 
   void _updateScreen() {
     _refreshScreen.value = !_refreshScreen.value;

@@ -71,7 +71,6 @@ class _CircleWidgetCenterState extends State<CircleWidgetCenter> {
   void _setSchedulerBinding() {
     SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
       for (var element in _circleWidgets) {
-        assert(element.key is GlobalKey, 'Element must be a Global Key');
         _circleWidgetsSize.add(element.calculateWidgetHalfSize());
       }
       _updateScreen();

@@ -1,15 +1,15 @@
 library circular_rotation;
 
 import 'dart:async';
-import 'dart:collection';
 import 'dart:math' as math;
 import 'dart:ui' as ui;
 
-import 'package:circular_rotation/extensions/widget_extension.dart';
+import 'package:circular_rotation/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 import 'constants/dimens.dart';
+import 'extensions/widget_extension.dart';
 
 part 'common/globals.dart';
 
@@ -50,18 +50,22 @@ class CircularRotation extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  /// Start circle animation.
   static void startCircleAnimation() {
     controllerUserAction.add(CircleAnimationStatus.start);
   }
 
+  /// Stop circle animation.
   static void stopCircleAnimation() {
     controllerUserAction.add(CircleAnimationStatus.stop);
   }
 
+  /// Either start or stop circle animation.
   static void eitherStartOrStopAnimation() {
     controllerUserAction.add(CircleAnimationStatus.startStop);
   }
 
+  /// Refresh/Update circle animation.
   void _updateCircleAnimationsWidget() {
     controllerUserAction.add(CircleAnimationStatus.refreshScreen);
   }
@@ -69,7 +73,7 @@ class CircularRotation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
+      builder: (_, __) {
         _updateCircleAnimationsWidget();
         return CircularRotationInheritedModel(
           circularRotationModel: circularRotationProperty,

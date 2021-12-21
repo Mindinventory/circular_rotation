@@ -8,7 +8,7 @@ class CircularRotationBody extends StatefulWidget {
 }
 
 class _CircularRotationBodyState extends State<CircularRotationBody> {
-  ValueNotifier<bool> isCirclesDrawn = ValueNotifier(false);
+  final ValueNotifier<bool> isCirclesDrawn = ValueNotifier(false);
 
   @override
   void initState() {
@@ -20,24 +20,24 @@ class _CircularRotationBodyState extends State<CircularRotationBody> {
     return _buildBody();
   }
 
-  double getRadius(
-      {required double radius,
-      required double currentScreenSize,
-      required designSize}) {
-    return ((radius * currentScreenSize) / designSize);
-  }
+  double getRadius({
+    required double radius,
+    required double currentScreenSize,
+    required designSize,
+  }) =>
+      (radius * currentScreenSize) / designSize;
 
   Widget _buildBody() {
     return Stack(
       children: [
         RepaintBoundary(
-          child:
-              CustomPaint(painter: _buildCirclePainter(), child: Container()),
+          child: CustomPaint(
+            painter: _buildCirclePainter(),
+            child: Container(),
+          ),
         ),
         ValueListenableBuilder(
-          builder: (_, bool value, __) {
-            return (value) ? const _CircleWidgets() : Container();
-          },
+          builder: (_, bool value, __) => (value) ? const _CircleWidgets() : Container(),
           valueListenable: isCirclesDrawn,
         )
       ],
@@ -47,15 +47,13 @@ class _CircularRotationBodyState extends State<CircularRotationBody> {
   CustomPainter _buildCirclePainter() {
     return DrawCirclePainter(
       context: context,
-      onCircleDrawComplete: () {
-        setSchedulerForCircleDrawn();
-      },
+      onCircleDrawComplete: _setSchedulerForCircleDrawn,
     );
   }
 
-  void setSchedulerForCircleDrawn() {
+  void _setSchedulerForCircleDrawn() {
     WidgetsBinding.instance?.addPostFrameCallback(
-      (timeStamp) {
+      (_) {
         const _CircleWidgets();
         isCirclesDrawn.value = true;
         controllerUserAction.add(CircleAnimationStatus.refreshScreen);
