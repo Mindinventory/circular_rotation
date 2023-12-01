@@ -58,6 +58,10 @@ class CircularRotationModel {
   /// It contains the double value.
   final double thirdCircleRadians;
 
+  final bool firstCircleFill;
+  final bool secondCircleFill;
+  final bool thirdCircleFill;
+
   /// Displays the first circle widgets.
   /// It contains the List of Widgets.
   final List<Widget>? firstCircleWidgets;
@@ -84,6 +88,12 @@ class CircularRotationModel {
   /// It contains Color value.
   /// Default value is Colors.black
   final Color? firstCircleStrokeColor;
+
+  final Color firstCircleFillColor;
+
+  final Color secondCircleFillColor;
+
+  final Color thirdCircleFillColor;
 
   /// Change the second circle stroke(line) color.
   /// It contains Color value.
@@ -187,6 +197,12 @@ class CircularRotationModel {
     this.firstCircleRadians = 0,
     this.secondCircleRadians = 0.5,
     this.thirdCircleRadians = 1,
+    this.firstCircleFill = false,
+    this.secondCircleFill = false,
+    this.thirdCircleFill = false,
+    this.firstCircleFillColor = Colors.black,
+    this.secondCircleFillColor = Colors.black,
+    this.thirdCircleFillColor = Colors.black,
     this.firstCircleWidgets,
     this.secondCircleWidgets,
     this.thirdCircleWidgets,

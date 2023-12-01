@@ -47,16 +47,19 @@ class _MyAppState extends State<MyApp> {
         ),
         child: CircularRotation(
           circularRotationProperty: CircularRotationModel(
+            // firstCircleFill: true,
+            // secondCircleFill: true,
+            // thirdCircleFill: true,
+            // firstCircleFillColor: Colors.red,
+            // secondCircleFillColor: Colors.blue,
+            // thirdCircleFillColor: Colors.purple,
             defaultCircleStrokeWidth: Dimens.strokeSmall,
             defaultCircleStrokeColor: Colors.white,
             startAnimation: true,
             repeatAnimation: false,
-            firstCircleAnimationDuration:
-                Constants.firstCircleAnimationDurationInMilliseconds,
-            secondCircleAnimationDuration:
-                Constants.secondCircleAnimationDurationInMilliseconds,
-            thirdCircleAnimationDuration:
-                Constants.thirdCircleAnimationDurationInMilliseconds,
+            firstCircleAnimationDuration: Constants.firstCircleAnimationDurationInMilliseconds,
+            secondCircleAnimationDuration: Constants.secondCircleAnimationDurationInMilliseconds,
+            thirdCircleAnimationDuration: Constants.thirdCircleAnimationDurationInMilliseconds,
             centerWidget: const InkWell(
               onTap: CircularRotation.eitherStartOrStopAnimation,
               child: _GetProfile(
@@ -145,8 +148,7 @@ class _GetProfile extends StatelessWidget {
 }
 
 class _CircularImage extends StatelessWidget {
-  const _CircularImage({required this.image, required this.radius, Key? key})
-      : super(key: key);
+  const _CircularImage({required this.image, required this.radius, Key? key}) : super(key: key);
   final String image;
   final double radius;
 

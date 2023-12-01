@@ -32,6 +32,9 @@ Circular rotation, It is fully customizable package which allow you to set custo
 ### Circular Rotation
 ![Circular Rotation](https://github.com/Mindinventory/circular_rotation/blob/master/assets/circular_rotation.gif)
 
+### Circular Rotation color
+![Circular Rotation](https://github.com/Mindinventory/circular_rotation/blob/master/assets/circular_rotation_color.gif)
+
 ## Usage
 
 ### Example
