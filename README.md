@@ -46,6 +46,12 @@ Circular rotation, It is fully customizable package which allow you to set custo
 
 ```
 CircularRotation(
+    firstCircleFill: true,
+    secondCircleFill: true,
+    thirdCircleFill: true,
+    firstCircleFillColor: Colors.red,
+    secondCircleFillColor: Colors.blue,
+    thirdCircleFillColor: Colors.purple,
     defaultCircleStrokeWidth: 0.2,
     defaultCircleStrokeColor: Colors.white,
     startAnimation: true,
