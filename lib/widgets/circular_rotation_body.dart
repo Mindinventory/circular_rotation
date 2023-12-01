@@ -52,7 +52,7 @@ class _CircularRotationBodyState extends State<CircularRotationBody> {
   }
 
   void _setSchedulerForCircleDrawn() {
-    WidgetsBinding.instance?.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         const _CircleWidgets();
         isCirclesDrawn.value = true;
@@ -67,8 +67,8 @@ class _CircleWidgets extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: const [
+    return const Stack(
+      children: [
         CircleWidgetsFirst(),
         CircleWidgetsSecond(),
         CircleWidgetsThird(),
