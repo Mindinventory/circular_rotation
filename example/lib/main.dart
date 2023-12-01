@@ -47,12 +47,12 @@ class _MyAppState extends State<MyApp> {
         ),
         child: CircularRotation(
           circularRotationProperty: CircularRotationModel(
-            firstCircleFill: true,
-            secondCircleFill: true,
-            thirdCircleFill: true,
-            firstCircleFillColor: Colors.red,
-            secondCircleFillColor: Colors.blue,
-            thirdCircleFillColor: Colors.purple,
+            // firstCircleFill: true,
+            // secondCircleFill: true,
+            // thirdCircleFill: true,
+            // firstCircleFillColor: Colors.red,
+            // secondCircleFillColor: Colors.blue,
+            // thirdCircleFillColor: Colors.purple,
             defaultCircleStrokeWidth: Dimens.strokeSmall,
             defaultCircleStrokeColor: Colors.white,
             startAnimation: true,
