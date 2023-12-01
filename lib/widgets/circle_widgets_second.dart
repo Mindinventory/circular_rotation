@@ -19,8 +19,7 @@ class _CircleWidgetsSecondState extends State<CircleWidgetsSecond> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _circularRotationModel =
-        CircularRotationInheritedModel.of(context).circularRotationModel;
+    _circularRotationModel = CircularRotationInheritedModel.of(context).circularRotationModel;
     _circleAnimationStatus = _getCircleAnimationStatus();
     _startAnimation = _circularRotationModel.startAnimation;
     _totalElements = _circularRotationModel.secondCircleWidgets?.length ?? 0;
@@ -37,7 +36,7 @@ class _CircleWidgetsSecondState extends State<CircleWidgetsSecond> {
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _refreshScreen,
-      builder: (_,__,___) {
+      builder: (_, __, ___) {
         _initData();
         return Stack(
           children: _circleWidgets,
@@ -62,8 +61,7 @@ class _CircleWidgetsSecondState extends State<CircleWidgetsSecond> {
               animationDuration: _calculateAnimationDuration(),
               curve: _circularRotationModel.curve,
               child: child,
-              onWidgetBuild: (double size, Widget child) =>
-                  _onWidgetBuild(index, size, child),
+              onWidgetBuild: (double size, Widget child) => _onWidgetBuild(index, size, child),
               onAnimationEnd: _onAnimationEnd,
             ),
           );
@@ -72,14 +70,10 @@ class _CircleWidgetsSecondState extends State<CircleWidgetsSecond> {
     }
   }
 
-  double _calculateWidgetEndPosition(int index) => (_startAnimation)
-      ? (index + _totalElements).toDouble()
-      : index.toDouble();
+  double _calculateWidgetEndPosition(int index) => (_startAnimation) ? (index + _totalElements).toDouble() : index.toDouble();
 
   CircleAnimationStatus _getCircleAnimationStatus() =>
-      (_circularRotationModel.startAnimation)
-          ? CircleAnimationStatus.start
-          : CircleAnimationStatus.idle;
+      (_circularRotationModel.startAnimation) ? CircleAnimationStatus.start : CircleAnimationStatus.idle;
 
   _onAnimationEnd() {
     _circularRotationModel.onSecondAnimationEnd?.call();
@@ -97,19 +91,15 @@ class _CircleWidgetsSecondState extends State<CircleWidgetsSecond> {
       size: size,
       circleRadius: _secondRadius,
       circleRadians: _circularRotationModel.secondCircleRadians,
-      circleWidgetsSize: (_circleWidgetsSize.length > index)
-          ? _circleWidgetsSize[index]
-          : const Size(0, 0),
+      circleWidgetsSize: (_circleWidgetsSize.length > index) ? _circleWidgetsSize[index] : const Size(0, 0),
       child: child,
     );
   }
 
-  int _calculateAnimationDuration() =>
-      _circularRotationModel.secondCircleAnimationDuration ??
-      _circularRotationModel.defaultCircleAnimationDuration;
+  int _calculateAnimationDuration() => _circularRotationModel.secondCircleAnimationDuration ?? _circularRotationModel.defaultCircleAnimationDuration;
 
   void _setSchedulerBinding() {
-    SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       for (var element in _circleWidgets) {
         _circleWidgetsSize.add(element.calculateWidgetHalfSize());
       }
@@ -133,10 +123,7 @@ class _CircleWidgetsSecondState extends State<CircleWidgetsSecond> {
     }
   }
 
-  void _eitherStartOrStop() =>
-      (_circleAnimationStatus != CircleAnimationStatus.start)
-          ? _startCircleAnimation()
-          : _resetCircleAnimation();
+  void _eitherStartOrStop() => (_circleAnimationStatus != CircleAnimationStatus.start) ? _startCircleAnimation() : _resetCircleAnimation();
 
   void _updateScreen() {
     _refreshScreen.value = !_refreshScreen.value;

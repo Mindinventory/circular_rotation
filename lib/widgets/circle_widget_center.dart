@@ -24,8 +24,7 @@ class _CircleWidgetCenterState extends State<CircleWidgetCenter> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _circularRotationModel =
-        CircularRotationInheritedModel.of(context).circularRotationModel;
+    _circularRotationModel = CircularRotationInheritedModel.of(context).circularRotationModel;
   }
 
   @override
@@ -56,20 +55,12 @@ class _CircleWidgetCenterState extends State<CircleWidgetCenter> {
     );
   }
 
-  double _calculateLeftPosition(int index) =>
-      _circleCenter.dx -
-      ((_circleWidgetsSize.length > index)
-          ? _circleWidgetsSize[index].width
-          : 0);
+  double _calculateLeftPosition(int index) => _circleCenter.dx - ((_circleWidgetsSize.length > index) ? _circleWidgetsSize[index].width : 0);
 
-  double _calculateTopPosition(int index) =>
-      _circleCenter.dy -
-      ((_circleWidgetsSize.length > index)
-          ? _circleWidgetsSize[index].height
-          : 0);
+  double _calculateTopPosition(int index) => _circleCenter.dy - ((_circleWidgetsSize.length > index) ? _circleWidgetsSize[index].height : 0);
 
   void _setSchedulerBinding() {
-    SchedulerBinding.instance?.addPostFrameCallback((timeStamp) {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       for (var element in _circleWidgets) {
         _circleWidgetsSize.add(element.calculateWidgetHalfSize());
       }
